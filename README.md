@@ -2,7 +2,7 @@
 
 Generating easy cheatsheets for different topics
 
-#' Using
+## Using
 
 * create directory with topic name
 * create topic specific TeX-File in new directory
