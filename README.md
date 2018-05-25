@@ -12,7 +12,7 @@ Generating easy cheatsheets for different topics
 ## Template-Body
 
 ```latex
-%Body für every cheatsheet
+%Body for every cheatsheet
 \raggedright
 \footnotesize
 \begin{multicols}{3}	
@@ -31,7 +31,7 @@ Generating easy cheatsheets for different topics
 \section{Section 1}
 Text
 \subsection{xCode}
-Subsetction text
+Subsection text
 
 \section{Section 2}
 Text 2
