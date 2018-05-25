@@ -1,0 +1,58 @@
+%Preamble for every 
+\raggedright
+\footnotesize
+\begin{multicols}{3}	
+	% multicol parameters
+	% These lengths are set only within the two main columns
+	%\setlength{\columnseprule}{0.25pt}
+	\setlength{\premulticols}{1pt}
+	\setlength{\postmulticols}{1pt}
+	\setlength{\multicolsep}{1pt}
+	\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\underline{Registryforensik}} \\
+\end{center}
+
+\section{Relative Pfade}
+\settowidth{\MyLen}{\texttt{letterpaper}/\texttt{a4paper} \ }
+\begin{tabular}{@{}p{\the\MyLen}%
+				@{}p{\linewidth-\the\MyLen}@{}}
+\texttt{\%UserProfile\%} & Pfad zum derzeitigen Benutzerprofil \\
+\texttt{\%SystemDrive\%} & Laufwerksbuchstabe, auf dem Windows 
+							installiert ist, i.d.R \texttt{C:} \\
+\texttt{\%SystemRoot\%} & Pfad zum Windows Ordner, i.d.R. \texttt{C:\textbackslash Windows}
+\end{tabular}	
+
+\section{Aufbau}
+\subsection{Wurzelschlüssel}
+\settowidth{\MyLen}{\texttt{HKCR.sp.}}
+\settowidth{\MyLenTwo}{\texttt{HKEY\_CURRENT\_USER.space.enough.}}
+\begin{tabular}{@{}p{\MyLen}%
+				@{}p{\MyLenTwo}%
+				@{}p{\linewidth-\the\MyLen-\the\MyLenTwo}@{}}
+\texttt{HKLM} & HKEY\_LOCAL\_MACHINE & Hauptschlüssel \\
+\texttt{HKU} & HKEY\_HKU & Hauptschlüssel \\
+\texttt{HKCR} & HKEY\_CLASSES\_ROOT & Verweis\\
+\texttt{HKCU} & HKEY\_CURRENT\_USER & Verweis\\
+\texttt{HKCC} & HKEY\_CURRENT\_CONFIG & Verweis \\
+\end{tabular}
+
+\subsection{Verweise}
+\settowidth{\MyLen}{HKCR.sp }
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+\texttt{HKCC} & \texttt{HKLM\textbackslash SYSTEM\textbackslash CurrentControlSet\textbackslash Hardware Profiles\textbackslash Current} \\
+\texttt{HKCU} & \texttt{HKU\textbackslash S-1-5-21-xxx} (SID)\\
+\texttt{HKCR} & \texttt{HKLM\textbackslash SOFTWARE\textbackslash Classes}
+\end{tabular}
+
+\section{Section 3}
+Etc.
+
+% You can even have references
+\rule{0.3\linewidth}{0.25pt}
+\scriptsize
+\bibliographystyle{abstract}
+\bibliography{refFile}
+\end{multicols}
