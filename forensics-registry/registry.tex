@@ -1,0 +1,260 @@
+%Preamble for every 
+\raggedright
+\footnotesize
+\begin{multicols}{3}	
+	% multicol parameters
+	% These lengths are set only within the two main columns
+	%\setlength{\columnseprule}{0.25pt}
+	\setlength{\premulticols}{1pt}
+	\setlength{\postmulticols}{1pt}
+	\setlength{\multicolsep}{1pt}
+	\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\underline{Registryforensik}} \\
+\end{center}
+
+\section{Relative Pfade}
+\settowidth{\MyLen}{\texttt{letterpaper}/\texttt{a4paper} \ }
+\begin{tabular}{@{}p{\the\MyLen}%
+				@{}p{\linewidth-\the\MyLen}@{}}
+\texttt{\%UserProfile\%} & Pfad zum derzeitigen Benutzerprofil \\
+\texttt{\%SystemDrive\%} & Laufwerksbuchstabe, auf dem Windows 
+							installiert ist, i.d.R \texttt{C:} \\
+\texttt{\%SystemRoot\%} & Pfad zum Windows Ordner, i.d.R. \texttt{C:\textbackslash Windows}
+\end{tabular}	
+
+\section{Schlüssel \& Werte}
+Ein Schlüssel enthält einen oder mehrere Werte sowie einen Zeitstempel des letzten Zugriffs\\
+Jeder Wert hat 3 Felder:
+\settowidth{\MyLen}{value.fields.}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{Name} & Eindeutig innerhalb eines Schlüssels\\
+	\texttt{Typ} & Datentyp des Wertes (s.u.)\\
+	\texttt{Daten} & kann leer oder null sein, Maximum 32767 Bytes, häufig in hexadezimaler Notation\\
+\end{tabular}
+Die wichtigsten Datentypen sind
+\settowidth{\MyLen}{Reg.Expand.leng}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{REG\_NONE} & kein definierter Typ\\
+	\texttt{REG\_SZ} & Fixe Länge und NULL-Char am Ende\\
+	\texttt{REG\_EXPAND\_SZ} & Variable Länge und NULL-Char am Ende\\
+	\texttt{REG\_BINARY} & Binärdaten\\
+	\texttt{REG\_DWORD} & Double-Word-Werte, häufig boolesche Werte\\
+	\texttt{REG\_LINK} & Link\\
+	\texttt{REG\_MULTI\_SZ} & Liste von Strings\\
+\end{tabular}
+
+
+\section{Struktur}
+\subsection{Wurzelschlüssel}
+\settowidth{\MyLen}{\texttt{HKCR.sp.}}
+\settowidth{\MyLenTwo}{\texttt{HKEY\_CURRENT\_USER.space.enough.}}
+\begin{tabular}{@{}p{\MyLen}%
+				@{}p{\MyLenTwo}%
+				@{}p{\linewidth-\the\MyLen-\the\MyLenTwo}@{}}
+\texttt{HKLM} & HKEY\_LOCAL\_MACHINE & Hauptschlüssel \\
+\texttt{HKU} & HKEY\_HKU & Hauptschlüssel \\
+\texttt{HKCR} & HKEY\_CLASSES\_ROOT & Verweis\\
+\texttt{HKCU} & HKEY\_CURRENT\_USER & Verweis\\
+\texttt{HKCC} & HKEY\_CURRENT\_CONFIG & Verweis \\
+\end{tabular}
+
+\subsection{Verweise}
+\settowidth{\MyLen}{HKCR.sp }
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+\texttt{HKCC} & \texttt{HKLM\textbackslash SYSTEM\textbackslash CurrentControlSet\textbackslash Hardware Profiles\textbackslash Current} \\
+\texttt{HKCU} & \texttt{HKU\textbackslash S-1-5-21-xxx} (SID)\\
+\texttt{HKCR} & \texttt{HKLM\textbackslash SOFTWARE\textbackslash Classes}
+\end{tabular}
+
+\subsection{HKU}
+Nutzerspezifische Einstellungen und Informationen für jeden aktiv geladenen Benutzer (Standardprofile und angemeldete Profile, keine abgemeldeten Nutzer)
+\settowidth{\MyLen}{SID.classes.length.long.}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{.DEFAULT} & Einstellungen, die Windows nutzt, bevor ein Nutzer sich eingeloggt hat \\
+	\texttt{S-1-5-18} & well-known SID für LocalSystem-Benutzer\\
+	\texttt{S-1-5-19} & well-known SID für LocalService-Benutzer, lokale Dienste, die den LocalSystem-User nicht benötigen\\
+	\texttt{S-1-5-20} & well-known SID für NetworkService-Benutzer, Netzwerkdienste, die den LocalService-Benutzer nicht benötigen\\
+	\texttt{S-1-5-21-[...]} & SID des derzeit angemeldeten Benutzers (Link von \texttt{HKCU})\\
+	\texttt{S-1-5-21-[...]\_Classes} & Nutzerspezifische Dateiverknüpfungen\\
+\end{tabular}
+
+\subsection{HKCU}
+Link auf \texttt{HKU\textbackslash [SID]}\\
+Spezifische Einstellungen und Informationen zum angemeldeten Benutzer (Umgebungsvariablen, Desktopeinstellungen, Netzwerkverbindungen, Drucker und Präferenzen)
+\settowidth{\MyLen}{SID.classes.length.long.}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{AppEvents} & Verknüpft Audiodateien mit Aktionen (z.B. Ton beim Öffnen eines Menüs)\\
+	\texttt{Console} & Daten zum Console-Subsystem (z.B. zum MS-DOS-Command-Prompt)\\
+	\texttt{Control-Panel} & Einstellungen der Systemsteuerung, u.a. regionale Einstellungen und Erscheinungsbild\\
+	\texttt{Environment} & Umgebungsvariablen, die Benutzer gesetzt haben\\
+	\texttt{Keyboard-Layout} & Installierte Tastaturlayouts\\
+	\texttt{Network} & Jeder Unterschlüssel ein Netzlaufwerk, Name des Schlüssels ist Laufwerksbuchstabe, enthält Konfigurationsdaten zum Verbinden\\
+	\texttt{Printers} & Präferenzen des Benutzers zum Drucken\\
+	\texttt{Software} & Nutzerspezifische Einstellungen zu installierten Programmen, je nach Programm Informationen zu Programmanbieter, Programm, Version, Installationsdatum und zulegt zugegriffene Dateien. Ablage nach HKCU\textbackslash Software\textbackslash Programmanbieter\textbackslash -Programm\textbackslash Version\\
+	\texttt{Volatile Environment} & Umgebungsvariablen, die beim Login definiert wurden\\
+\end{tabular}
+
+\subsection{HKLM}
+Spezifische Einstellugen des lokalen Rechners, die für alle Benutzer geladen werden.
+\settowidth{\MyLen}{HLKM.folder.}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{HARDWARE} & Speichert HW-Daten beim Systemstart, wird bei jedem Start erstellt und mit Informationen über Geräte, Treiber und Ressourcen gefüllt\\
+	\texttt{SAM} & Lokale Windows-Sicherheitsdatenbank über Benutzer- und Gruppeninformationen (Link zu \texttt{HKLM\textbackslash SECURITY\textbackslash SAM})\\
+	\texttt{SECURITY} & Lokale Windows-Sicherheitsdatenbank (inklusive SAM)\\
+	\texttt{SOFTWARE} & Einstellungen zu Applikationen des Rechners (und Microsoft-Applikationen)\\
+	\texttt{SYSTEM} & Informationen zur Systemkonfiguration (z.B. Gerätetreiber und Dienste). Derzeitiges Hardwareprofil ist Link von \texttt{HKCC}. Mehrere Sätze mit Schema \texttt{ControlSetxxx}. \texttt{HKLM\textbackslash SYSTEM\textbackslash Select} zeigt aktuelle verwendetes Profil in \texttt{CurrentControlSet}.
+\end{tabular}
+
+\subsection{HKCR}
+Link auf \texttt{HKLM\textbackslash Software\textbackslash Classes \& HKU\textbackslash [SID]\_Classes}
+\begin{itemize}[leftmargin=*]
+	\item Zuweisungen für Dateierweiterungen
+	\item OLE-Datenbank
+	\item Einstellungen für registrierte Anwendungen für COM-Objekte
+	\item Nutzer- und systembasierte Informationen
+\end{itemize}
+Setzt sich aus \texttt{HKLM\textbackslash SOFTWARE\textbackslash Classes} und \texttt{HKU\textbackslash [SID]\_Classes} zusammen. Falls identischer Wert, hat \texttt{HKCU} Priorität.\\
+Beispiel: Was soll passieren, wenn eine .pptx-Datei geöffnet wird. \texttt{HKCR} macht einen erheblichen Teil der Registry und des Systemverhaltens aus
+
+\subsection{HKCC}
+Link auf \texttt{HKLM\textbackslash System\textbackslash CurrenControlSet\textbackslash Hardware Profiles\textbackslash Current}\\
+Link zu den Konfigurationsdaten des derzeitigen Hardwareprofils. Informationen werden bei jedem Booten neu erzeugt und daher nicht physisch in der Registry-Datei gespeichert.
+\settowidth{\MyLen}{HLKM.folder.}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{System} & \\
+	\texttt{Software} & \\
+\end{tabular}
+
+\section{Hives}
+User-Profile-Hives in \texttt{\%UserProfile\%\textbackslash NTUSER.DAT}\\
+Alle anderen Hives und Dateien in \%SystemRoot\%\textbackslash System32\textbackslash config
+\settowidth{\MyLen}{\texttt{HKLM.SECURITY.len}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{HKU\textbackslash .DEFAULT} & DEFAULT\\
+	\texttt{HKLM\textbackslash SAM} & SAM\\
+	\texttt{HLKM\textbackslash SECURITY} & SECURITY\\
+	\texttt{HKLM\textbackslash SOFTWARE} & SOFTWARE\\
+	\texttt{HLKM\textbackslash SYSTEM} & SYSTEM\\
+\end{tabular}
+Schlüssel \texttt{HKLM\textbackslash HARDWARE} mit dynamischen Hive, wird beim Systemstart erstellt aber nicht gespeichert\\
+Liste zu Standard-Hive-Files: \texttt{HKLM\textbackslash SYSTEM\textbackslash CurrentControlSet\textbackslash Control\textbackslash hivelist}\\
+Liste User-Hives: \texttt{HLKM\textbackslash SOFTWARE\textbackslash Microsoft\textbackslash Windows NT\textbackslash CurrentVersion\textbackslash ProfileList}
+
+\section{SID \& SAM}
+Liste der SIDs \texttt{HKLM\textbackslash Software\textbackslash Microsoft\textbackslash WindowsNT\textbackslash CurrentVersion\textbackslash ProfileList}\\
+Pfad zu individuellen Profilen: \texttt{ProfileImagePath}\\
+Aufbau der SID (S-1-5-21-[...]-1002):
+\settowidth{\MyLen}{\texttt{SID.length.}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{S} & identifiziert den Schlüssel als SID\\
+	\texttt{1} & Revisionsnummer, Nummer der SID-Spezifikation\\
+	\texttt{5} & Autorität\\
+	\texttt{21-[...]} & Domänen-ID, identifiziert die Domäne oder den lokalen Computer, Wert ist variabel\\
+	\texttt{1002} & Benutzer-ID, relative ID (RID), >1000 für Profile die nicht standardmäßig generiert wurden
+\end{tabular}
+
+\section{Wichtige Pfade}
+\subsubsection{Autorun}
+\settowidth{\MyLen}{\texttt{HKLM.Software.Microsoft.Windows.CurrentVersion.RunOnce.space}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{HKLM\textbackslash Software\textbackslash Microsoft\textbackslash Windows\textbackslash CurrentVersion\textbackslash RunOnce} & \\
+	\texttt{HKLM\textbackslash Software\textbackslash Microsoft\textbackslash Windows\textbackslash CurrentVersion\textbackslash Run} & \\
+	\texttt{HKCU\textbackslash Software\textbackslash Microsoft\textbackslash Windows\textbackslash CurrentVersion\textbackslash RunOnce} & \\
+	\texttt{HKCU\textbackslash Software\textbackslash Microsoft\textbackslash Windows\textbackslash CurrentVersion\textbackslash Run} & \\
+\end{tabular}
+Pfade in \texttt{Run} bei jedem Systemstart, \texttt{RunOnce} nur einmal
+
+\subsubsection{MRU}
+\texttt{\path{HKU\<SID>\Software\Microsoft\Windows\CurrentVersion\Explorer}}
+\settowidth{\MyLen}{\texttt{RecentDocs.sp.}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{ComDlg32} & Zuletzt ausgeführte Anwendungen und deren Pfade sowie geöffnete oder geänderte Dateien\\
+	 \texttt{RecentDocs} & Unterschlüssel mit Dateierweiterungen, zuletzt geöffnete Dateien diesen Typs\\
+	 \texttt{RunMRU} & Aufrufe, die via Run durchgeführt wurden\\
+	 \texttt{UserAssist} & Werte von Objekten, auf der Nutzer zugegriffen hat (z.B. Optionen der Systemsteuerung, Dateiverknüpfungen und Programme)
+\end{tabular}
+ROT13 verschlüsselt, es gibt mehrere MRU-Listen in unterschiedlichen Listen
+
+\subsubsection{Geschützter Speicher}
+\texttt{\path{HKU\<SID>\Software\Microsoft\Protected Storage System Provider}}\\
+Verschlüsselte Passwörter für viele Anwendungen (Outlook Express, MSN-Explorer oder Internet Explorer)\\
+Autovervollständigung oder Passwort merken\\
+
+\subsubsection{Internet Explorer}
+\texttt{\path{HKU\<SID>\Software\Microsoft\Internet Explorer}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{Download} & Informationen zu Downloads\\
+	\texttt{Main} & Benutzereinstellungen (Search Bars, Startseite, etc.)\\
+	\texttt{TypedURLs} & Zuletzt besuchte Seiten (z.B. EMail, Onlinebanking)\\
+\end{tabular}
+Microsoft Edge nutzt \texttt{\path{HKCU/Software/Classes/Local  Settings/Software/Microsoft/Windows/CurrentVersion/AppContainer/Storage/microsoft.microsoftedge_xxxxxx/MicrosoftEdge}}
+
+\subsection{Netzwerke}
+\subsubsection{WLAN}
+\settowidth{\MyLen}{\texttt{HKLM.Software.Microsoft.Windows.spa.}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{\path{HKLM/Software/Microsoft/Windows NT/CurrentVersions/NetworkCards}} & Netzwerkgeräte (Beschreibung und GUID)\\
+	\texttt{\path{HKLM/System/CurrentControlSet/Services/Tcpip/Parameters/Interfaces/<GUID>}} & Details zum Netzwerkgerät (IP, Gateway, Domain)\\
+\end{tabular}
+\subsubsection{P2P}
+\settowidth{\MyLen}{\texttt{HKLM.Software.Microsoft.Windows.sp.}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{\path{HKLM/System/ControlSet001/Services/SharedAccess/Parameters/FirewallPolicy/StandardProfile/AuthorizedApplications/List}} & Applikationen mit erlaubtem Zugriff auf ausgehende Verbindungen\\
+\end{tabular}
+
+\subsection{Angeschlossene Geräte}
+\settowidth{\MyLen}{\texttt{HKLM.Software.Microsoft.Windows.sp.}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{\path{HKLM/System/Mounted Devices}} & Liste aller Geräte, die im System gemountet wurden\\
+	\texttt{\path{HKCU/Software/Microsoft/Windows/CurrentVersion/Explorer/MountPoints2}} & Mount eines Geräts bei Nutzerlogin\\
+	\texttt{\path{HKLM/System/CurrentControlSet/Control/DeviceClasses}} & Enthält für jede DeviceClass-GUID Unterschlüssel mit Geräten die verbunden waren oder sind. \texttt{DeviceInstance} ist Pfad zu \texttt{\path{HKLM/System/CurrentControlSet/Enum}}. Durch Export Zeitstempel für ersten und letzten Zugriff\\
+	\texttt{\path{HKLM/System/CurrentControlSet/Enum/<Enumerator>/<DeviceID>}} & Geräte im System mit Gerätebeschreibung und IDs\\
+\end{tabular}
+
+\section{Antiforensische Maßnahmen}
+\settowidth{\MyLen}{\texttt{HKLM.Software.Microsoft.}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{\path{Zeitstempel fälschen}} & Prüfsumme häufig nur auf Inhalt (Tool \url{http://www.petges.lu/home/download})\\
+	\texttt{Pagefile.sys} & In \texttt{\path{HKLM/System/CurrentCOntrolSet/Control/Session Manager/Memory Management}} den Wert \texttt{ClearPagefileAtShutdown} auf 1 setzen\\
+	\texttt{Zeitstempel vermeiden} & \texttt{\path{HKLM/System/CurrentControlSet/Contol/FileSystem}} Wert \texttt{NtfsDisableLastAccessUpdate} auf 1 setzen\\
+	\texttt{Einträge löschen} & Verlauf IE oder zuletzt genutzte Dokumente\\
+	\texttt{UserAssist abstellen} & \texttt{\path{HKU/Software/Microsoft/Windows/CurrentVersion/Explorer/UserAssist}} Wert \texttt{NoLog} vom Typ DWORD mit Wert 1 erstellen
+\end{tabular}
+
+\section{Tools}
+\settowidth{\MyLen}{\texttt{Tools.Registry.spa.}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{FTK-Imager} & Erstellung von Abbildern, Kopien der Hive-Files (Live) (Files $\rightarrow$ Obtain Protected Files)\\
+	\texttt{Registry-Editor} & Importieren und Exportieren von Dateien, Struktur laden und entfernen, Verbinden mit der Registry eines Remotecomputers, Berechtiungen ändern, Registry durchsuchen\\
+	\texttt{RegShot} & Änderungen in der Registry aufzeichnen (Erstellen eines ersten Abbildes und Vergleich mit einem zweiten)\\
+	\texttt{Forensic Registry EDitor (fred)} & Untersuchung und Bearbeitung von HIVE-Dateien, vorgefertige Berichtsvorlagen\\
+	\texttt{RegRipper} & Extrahieren von spezifischen Informationen, Automatisierung durch Plugins und Profile\\
+	\texttt{DCODE} & Decodieren von Zeitstempeln (\url{https://www.dcode.fr/timestamp-converter})\\
+\end{tabular}
+Umwandeln der Zeitrstempel
+
+% You can even have references
+\rule{0.3\linewidth}{0.25pt}
+\scriptsize
+\bibliographystyle{abstract}
+\bibliography{refFile}
+\end{multicols}
