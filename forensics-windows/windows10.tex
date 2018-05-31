@@ -1,0 +1,335 @@
+%Preamble for every 
+\raggedright
+\footnotesize
+\begin{multicols}{3}	
+	% multicol parameters
+	% These lengths are set only within the two main columns
+	%\setlength{\columnseprule}{0.25pt}
+	\setlength{\premulticols}{1pt}
+	\setlength{\postmulticols}{1pt}
+	\setlength{\multicolsep}{1pt}
+	\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\underline{Windows 10-Forensik}} \\
+     \small by Koll, Michael \\
+     \url{https://github.com/michkoll/}
+\end{center}
+
+\section{Allgemein}
+
+\subsubsection{Buildnummer}
+Aktuelle Buildnummer über \texttt{systeminfo} (cmd.exe) oder \path{HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentBuildNumber}
+
+\subsubsection{Zuletzt verwendete Elemente}
+\path{C:\Users\<username>\AppData\Roaming\Microsoft\Windows\Recent}
+
+\section{Überwachter Ordnerzugriff}
+Überwacht und blockiert den schreibenden Zugriff auf vorhandene Dateien für nicht-vertrauenswürdige Applikationen.
+
+
+\subsubsection{Aktivieren}
+Windows Defender Security Center $\rightarrow$ Einstellungen für Viren- und Bedrohungsschutz $\rightarrow$ Überwachter Ordnerzugriff\\
+\texttt{oder}\\
+Gruppenrichtlinien: \texttt{Computerkonfiguration/Administrative Vorlagen/Windows/Windows Defender Antivir/Windows Defender Exploit Guard/Überwachter Ordnerzugriff}\\
+\texttt{oder}\\
+Registry (Besitzer vorher ändern): \path{HKLM\Software\Microsoft\Windows Defender\Windows Defender Exploit Guard\ControlledFolderAccess\EnableControlledFolderAccess} (DWORD) = 0x01
+
+\subsubsection{Erlaubte Anwendungen}
+\path{HKLM\Software\Microsoft\Windows Defender\Windows Defender Exploit Guard\ControlledFolderAccess\AllowedApplications}\\
+Hinzufügen mit (PS): \texttt{Add-MpPreference -ControlledFolderAcessAllowedApplications "<Anwendungspfad>"}
+
+\subsubsection{Geschützte Ordner}
+\path{HKLM\Software\Microsoft\Windows Defender\Windows Defender Exploit Guard\ControlledFolderAccess\ProtectedFolders}\\
+Standardmäßig geschützte Ordner: Documents|Pictures|Videos|Music|Desktop|Favorites (<username> und Public)\\
+
+
+\subsubsection{Ereignisse}
+Einzusehen über EventVwr
+oder Powershell:\\
+\texttt{Get-WinEvent -LogName "Microsoft-Windows-Windows Defender/Operational" | Where-Object \{\$\_.Id -in 1123,1124,5007\}}\\
+Ereignis-IDs:
+\settowidth{\MyLen}{\texttt{5007.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{1123} & Blockiertes Ereignis\\
+	\texttt{1124} & Überwachtes Ereignis (Auditmodus)\\
+	\texttt{5007} & Änderung von Einstellungen\\
+\end{tabular}
+
+
+\section{Jumplists}
+Mehr Informationen als MRU/MFU:
+\begin{itemize}[leftmargin=*]
+	\item Dateiname, -pfad
+	\item MAC Zeitstempel
+	\item Name des Volumes
+	\item Zeitlicher Verlauf von Down- und Uploads
+	\item Informationen bleiben nach Löschen der Datei erhalten
+\end{itemize}
+
+\subsubsection{Speicherort}
+Erstellt vom Betriebssystem: \path{C:\User\<username>\AppData\Roaming\Microsoft\Windows\Recent\AutomaticDestinations}\\
+Erstellt von Softwareanwendungen: \path{C:\User\<username>\AppData\Roaming\Microsoft\Windows\Recent\CustomDestinations}\\
+Dateiname: \path{<AppId>.<automatic|custom>Destinations-ms}\\
+Die AppId kann im ForensicsWiki nachgelesen werden \url{https://www.forensicswiki.org/wiki/List_of_Jump_List_IDs}
+
+\subsubsection{AutomaticDestination JL}
+Aufbau der Datei:\\
+Header (32 Byte) mit Versionssnummer (3=Win10, 1=Win7/8), Anzahl Einträge, Anzahl gepinnte Einträge, Zuletzt zugewiesene Entry-ID, Anzahl der Aktionen\\
+DestList-Entry:\\
+\settowidth{\MyLen}{\texttt{volume.id.space.l}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{Prüfsumme} &  Fehlerhafter Eintrag wird nicht angezeigt\\
+	\texttt{(New|Birth) Volume-ID} &  Bei Änderung des Volumes geänderte New-ID\\
+	\texttt{(New|Birth) Object-ID} &  Generiert aus Bootzeit,Sequenznummer und MAC-Adresse. Bei Änderung des Volumes neue New-ID\\
+	\texttt{NetBios Name} & nbtstat -n\\
+	\texttt{Entry ID} & Fortlaufende Nummer\\
+	\texttt{Access Timestamp} & letzter Zugriff \\
+	\texttt{Pinned Status} & angepinnt (ja/nein)\\
+	\texttt{Access Count} & Zugriffszähler\\
+	\texttt{variabel Unicode} & vollständiger Pfad zur Datei\\
+	\texttt{Länge Unicode} & Länge Unicodepfad\\
+\end{tabular}
+
+\subsubsection{CustomDestionations JL}
+einfachere Dateistruktur, zusammengesetzte MS-SHLINK-Segmente\\
+Anfang eines LNK-Segments: \texttt{4C 00 00 00 01 14 02 00 00 00 00 00 C0 00 00 00 00 00 00 46}\\
+Ende: \texttt{AB FB BF BA}
+
+\subsubsection{QuickAccess/Schnellzugriff}
+Angepinnte Einträge im Schnellzugriff des Explorer. Dateiname \path{5f7b5f1e01b83767.automaticDestinations-ms}
+
+\subsubsection{Tools}
+\settowidth{\MyLen}{\texttt{volume.id.space.l}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{JumpListExt for Windows 10} & grafische Oberfläche, nicht mehr stabil in aktuellen Versionen\\
+	\texttt{JLECmd} & \texttt{JLECmd.exe -f <JLFile> (--html|--csv|--json) <targetDir> (--ld)}\\
+\end{tabular}
+
+\section{Windows 10 Applications}
+\subsubsection{SystemApps}
+vorinstalliert, können nicht deinstalliert werden\\
+\path{C:\Windows\SystemApps\<appname>}
+\subsubsection{WindowsApps}
+über Windows Store
+\path{C:\Windows\WindowsApps\<appname>}
+\subsubsection{Einstellungsdaten}
+\path{C:\Users\<username>\AppData\Local\Packages\<appname>}\\
+Haupteinstellungen in Datei/Registry-Hive \path{settings.dat}
+\subsubsection{Anwendungsdaten}
+Gespeichert in ESE-DB-Datenbanken, Aufbau nicht vollständig bekannt, teilweise möglich mit \texttt{ESEDatabaseView} von Nirsoft
+
+\section{Fast Startup und Ruhezustand}
+Datei: \path{hiberfil.sys}
+\subsubsection{Zustände}
+\settowidth{\MyLen}{\texttt{volume.id.space.l}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{HIBR} & Im Ruhezustand\\
+	\texttt{RSTR} & Wird fortgesetzt\\
+	\texttt{WAKE} & Nach Fortsetzung\\
+\end{tabular}
+
+\subsubsection{Forensische Bewertung}
+Änderung des Formats ab Win8
+\begin{itemize}[leftmargin=*]
+	\item Header bleibt auch nach Fortsetzen verfügbar
+	\item Daten nur zwischen Versetzen in Ruhezustand bis zur Fortsetzung
+	\item Vor Win8 zeitlich weit zurückreichende Daten
+	\item Sichern der hiberfil.sys im laufenden Zustand keine forensisch relevanten Daten
+	\item Größte Menge Daten \texttt{shutdown /h}
+	\item HIBR2BIN ermöglicht dekomprimieren der Daten im neuen Format
+	\item Fast Startup liefert keine interessanten Daten, da alle Applikationen beendet sind
+\end{itemize}
+
+\section{Edge Browser / ESE-DB}
+
+\subsubsection{Anwendungspfad}
+\path{C:\Windows\SystemApps\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\MicrosoftEdge}
+
+\subsection{ESE-Datenbank}
+\subsubsection{Transaktionsflow}
+\settowidth{\MyLen}{\texttt{transaction.im.ram.anwenden.lc.arr.pc.space}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}}
+	\texttt{1. Transaction in RAM (Log Cache)}\\
+	\texttt{2. Seiten aus DB in RAM (Page Cache)}\\
+	\texttt{3. Transaktion im RAM anwenden (LC$\rightleftarrows$PC)}\\
+	\texttt{4. Aktualiserte Daten in Logdatei (LC$\rightarrow$Datei)}\\
+	\texttt{5. Datenbank aktualisieren}\\
+\end{tabular}
+
+\subsubsection{Dirty-DB}
+Datenbank, die nicht vollständig aktualisiert wurde.
+\settowidth{\MyLen}{\texttt{v01.chk.space.l}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{V01.chk} & Zeitpunkt der Transaktion\\
+	\texttt{*.log} & Transaktionsdaten, hexadezimale Dateinamen\\
+\end{tabular}
+\textbf{Wiederherstellung mit esentutl}\\
+\settowidth{\MyLen}{\texttt{esentutl.mh.database.dat.space}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{esentutl /mh database.dat} & Überprüfung der Datenbank (Feld State=Dirty)\\
+	\texttt{esentutl /r database.dat} &  Reparatur der Datenbank (Feld State=Clean)\\
+\end{tabular}
+
+\subsection{WebCacheV01.dat}
+\subsubsection{Pfade}
+$\rightarrow$\path{C:\Users\<username>\AppData\Local\Packages\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\AC\MicrosoftEdge\} (enthält v.a. Verweise und Speicherorte)
+$\rightarrow$\path{C:\Users\<username>\AppData\Local\Packages\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\AC\#!<number>\MicrosoftEdge\}
+
+\subsubsection{Aufbau}
+\settowidth{\MyLen}{\texttt{tabelle.container.n.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\textbf{Tabelle \texttt{Containers}} & \\
+	\texttt{ContainerId} & Referenz auf Tabelle \texttt{Container\_n}\\
+	\texttt{Directory} & Pfad zum Verzeichnis mit zwischengespeicherten Daten\\
+	\texttt{SecureDirectories} & Zufällige Zeichenfolge, in 8er-Gruppen teilbar\\
+	\texttt{Name} & Containertyp (Cookies|Content|History|...)\\
+	\texttt{PartitionId} & Integritätslevel, (Protected= Internet=Low | lokal=medium)\\
+	\textbf{Tabelle \texttt{Container\_n}} & \\
+	\texttt{SecureDirectory} & Unterverzeichnis im Cachepfad \\
+	\texttt{Type} & z.B. "In Private"-Modus (siehe Chivers)\\
+	\texttt{AccessCount} & Anzahl wie oft URL referenziert wird\\
+	<Timestamps> & \texttt{Sync, Creation, Expiry, Modified, Accessed Time}\\
+	\texttt{URL} & Quelle der Informationen\\
+	\texttt{Filename} & Name der Cachedatei\\
+\end{tabular}
+
+\subsubsection{Cache-Speicherort ermitteln}
+\settowidth{\MyLen}{\texttt{securedirectories.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{SecureDirectories} & in 8er-Blöcke aufteilen\\
+	\texttt{SecureDirectory} & zeigt auf x-ten Block (in Container\_n)\\
+	\texttt{Directory} & Zeichenfolge anhängen\\
+\end{tabular}
+
+\subsubsection{Zeitstempel}
+\settowidth{\MyLen}{\texttt{creationtime.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{CreationTime} & Erstellungzeit der Cachedatei/-objekt\\
+	\texttt{ExpiryTime} & vom Webserver vorgegeben, Cache wird ungültig\\
+	\texttt{ModifiedTime} & vom Webserver, Zeitpunkt der letzten Änderung der Ressource\\
+	\texttt{AccessTime} & Letzter Zugriff des Nutzers auf Datei\\
+\end{tabular}
+
+\subsubsection{Werkzeuge}
+Fazit: Tools gute Unterstützung, manuell bringt mehr
+\settowidth{\MyLen}{\texttt{browserhistoryview.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{IECacheView} & Zeigt Cachedateien von IE und Edge (Dateiname, -größe, -typ, URL, Zeitstempel, Cachedateipfad)\\
+	\texttt{BrowsingHistoryView} & Zeigt Browserverlauf mehrerer Browser\\
+\end{tabular}
+
+\section{OneDrive}
+\subsubsection{Anwendungspfad}
+\path{C:\User\<username>\AppData\Local\Microsoft\OneDrive\}
+
+\subsubsection{Registry}
+\path{HKU\Software\Microsoft\OneDrive\}
+\settowidth{\MyLen}{\texttt{....accounts.personal.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\path{.\} & \texttt{Version,UserFolder}\\
+	\path{.\Accounts\Personal} & \texttt{ClientFirstSignInTimestamp, UserCID, UserFolder}\\
+\end{tabular}
+
+\subsubsection{Konfigurations- und Diagnostikdaten}
+Ausgehend vom One-Drive-Verzeichnis:
+\settowidth{\MyLen}{\texttt{..logs.personal.synclog.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\path{.\logs\Personal\SyncDiagnostics.log} & Down-\textbackslash Uploadgeschwindigkeit, Ausstehende Down-\textbackslash Uploads, verfügbarer Speicherplatz lokal, UserCID (siehe REG), Anzahl Dateien und Verzeichnisse\\
+	\path{.\settings\Personal\<usercid>.dat} & bisher kein Parser, mit Hexeditor Dateinamen einsehen\\
+	\path{.\settings\Personal\<uploads|downloads>.txt} & Während Download temporär Daten wie Dateiname und User-CID\\
+\end{tabular}
+
+\subsubsection{Logdateien}
+\path{.\logs\Personal\}\\
+\path{*.aodl, *.odlsent, *.odl} enthalten Clientaktivitäten\\
+Die Datei \path{ObfuscationStringMap.txt} enthält verschleierte Dateinamen, die in den Logs gefunden werden können. Mögliche Aktionen in den Logs:
+\settowidth{\MyLen}{\texttt{....accounts.personal.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{FILE\_ACTION\_ADDED} & Datei lokal hinzugefügt\\
+	\texttt{FILE\_ACTION\_REMOVED} & Datei lokal entfernt\\
+	\texttt{FILE\_ACTION\_RENAMED} & Datei umbenannt\\
+\end{tabular}
+
+\subsubsection{Arbeitsspeicher}
+Username und Passwort liegen im Klartext vor, nach Parameter \texttt{\&passwd=} und \texttt{\&loginmft=} suchen\\
+
+\section{Benachrichtigungen und Kacheln}
+\subsubsection{Datenbank}
+\path{C:\Users\<username>\AppData\Local\Microsoft\Windows\Notifications}
+\settowidth{\MyLen}{\texttt{....accounts.personal.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{wpndatabase.db} & Datenbank (Signatur \texttt{53 51 4C 69 74 65 20 66 6F 72 6D 61 74 20 33})\\
+	\texttt{wpndatabase.db-wal} & Writhe Ahead Log (Signatur \texttt{37 7F 06 82} oder \texttt{37 7F 06 83})\\
+	\texttt{wpndatabase.db-shm} & Shared Memory File, keine spezifische Signatur\\
+\end{tabular}
+
+SQLite-Datenbank mit WAL-Verfahren: Änderungen in Datei, bei Erreichen des Checkpoints (manuell oder automatisch) synchronisiert. WAL-Dateien bei der Untersuchung einbeziehen (\texttt{PRAGMA wal\_checkpoint}).
+
+\subsubsection{Struktur und Inhalt}
+Relevante Tabellen in \texttt{wpndatabase.db}
+\settowidth{\MyLen}{\texttt{....accounts.personal.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{NotificationHandler} & Anwendungen, die zu Benachrichtigungen berechtigt sind (Zuordnung über PrimaryID$\rightarrow$ AppID,GUID)\\
+	\texttt{Notification} & Benachrichtigunginhalt $\rightarrow$ Payload\\
+\end{tabular}
+
+\subsubsection{Kacheln}
+Datenbank wie Benachrichtigungen,
+Zeitstempel \texttt{ArrivalTime} und \texttt{ExpiryTime} Rückschlüsse auf Verwendung des Computers\\
+Einige Anwendungen legen in dem DB-Verzeichnis Cacheordner an, die sehr lange zurückreichen
+
+\section{Cortana}
+\path{%localAppData%\Packages\Microsoft\Microsoft.Windows.Cortana_cw5n1h2txyewy}
+
+\subsubsection{Artefakte}
+\settowidth{\MyLen}{\texttt{....accounts.personal.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	$\rightarrow$\path{.\AppData\Indexed DB\IndexedDB.edb} & 11 Tabellen, Tabelle \texttt{HeaderTable} enthält \texttt{createdTime, lastOpenTime}\\
+	$\rightarrow$\path{.\LocalState\ESEDatabase_CortanaCoreInstance\CortanaCoreDb.dat} & [Veraltet] \texttt{Geofences} mit Standortdaten, \texttt{Reminders} benutzerspezifische Erinnerungen, \texttt{Triggers} LocationTriggers, TimeTriggers, ContactTriggers\\
+	$\rightarrow$\path{.\LocalState\DeviceSearchCache\} & keine Dokumentation, Infos über Programmeinträgen, -aufrufen, Zeitstempel und JL-Einträge\\
+	$\rightarrow$\path{.\AC\INetCache\<randomnumber>} & vollständige HTML-Seite von Suchen über Cortana\\
+	$\rightarrow$\path{.\AC\AppCache\<randomnumber>} & HTML- und JavaScript Dateien für Cortana-Suche\\
+	$\rightarrow$\path{.\LocalState\LocalRecorder\Speech} & Aufgezeichnete Sprachbefehle\\
+	$\rightarrow$\path{.\LocalState\Cortana\Uploads\Contacts} & Falls Synchronisierung mit Android, Kontaktdaten und Mobilnummern\\
+	$\rightarrow$\path{9d1f905ce5044aee.automaticDestinations-ms} & URLs die über Cortane-Suche ausgelöst wurden\\
+	$\rightarrow$\path{WebCacheV01.dat} & URLs die über Cortana aufgerufen wurden\\
+	$\rightarrow$\path{%SystemDrive%\Windows\Prefetch\SEARCHUI.EXE-14F7ADB7.pf} & Letzte Ausführungszeit(en)\\
+	$\rightarrow$\path{%SystemDrive%\Windows\appcompat\Programs\Amcache.hve} & Erstellungs- und Änderungszeitstempel der Anwendung\\
+\end{tabular}
+
+\subsubsection{Deaktivieren von Cortana}
+Parameter in \path{HKLM\Software\Policies\Microsoft\Windows\Windows Search}
+\settowidth{\MyLen}{\texttt{....accounts.personal.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{AllowCortana} & \texttt{dword:00000000}\\
+	\texttt{DisableWebSearch} & \texttt{dword:00000001}\\
+	\texttt{AllowSearchToUseLocation} & \texttt{dword:00000000}\\
+	\texttt{ConnectedSearchUseWeb} & \texttt{dword:00000000}\\
+	\texttt{ConnectedSearchPrivacy} & \texttt{dword:00000003}\\
+\end{tabular}
+
+% You can even have references
+\rule{0.3\linewidth}{0.25pt}
+\scriptsize
+\bibliographystyle{abstract}
+\bibliography{refFile}
+\end{multicols}
