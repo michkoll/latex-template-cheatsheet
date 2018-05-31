@@ -12,6 +12,8 @@
 
 \begin{center}
      \Large{\underline{Registryforensik}} \\
+     \small by Koll, Michael \\
+     \url{https://github.com/michkoll/}
 \end{center}
 
 \section{Relative Pfade}
@@ -165,6 +167,13 @@ Aufbau der SID (S-1-5-21-[...]-1002):
 \end{tabular}
 
 \section{Wichtige Pfade}
+\subsubsection{Systeminfo}
+\settowidth{\MyLen}{\texttt{HKLM.Software.Microsoft.WindowsNT}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{\path{HKLM/Software/Microsoft/Windows NT/CurrentVersion/CurrentBuildNumber}} & Windows Buildnummer (cmd: \texttt{systeminfo})\\
+\end{tabular}
+
 \subsubsection{Autorun}
 \settowidth{\MyLen}{\texttt{HKLM.Software.Microsoft.Windows.CurrentVersion.RunOnce.space}}
 \begin{tabular}{@{}p{\the\MyLen}%
