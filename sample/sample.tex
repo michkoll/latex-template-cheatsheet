@@ -15,15 +15,33 @@
 \end{center}
 
 \section{Section 1}
+% Aufzählung nach links eingerückt
 \begin{itemize}[leftmargin=*]
 	\item test
 	\item test2
 \end{itemize}
 \subsection{xCode}
-Subsetction text
+Subsection Text
 
 \section{Section 2}
-Text 2
+% Width der Spalten definieren, dies wird über \texttt{hier.wird.ein.text.eingegeben.der.von.der.laenge.passt}
+\settowidth{\MyLen}{\texttt{breite.erste.spalte}}
+\settowidth{\MyLenTwo}{\texttt{breite.zweite.spalte}}
+
+%Tabelle mit 2 Spalten, \MyLenTwo wird nicht benötigt
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{Eintrag 1} & Beschreibung \\
+	\texttt{Eintrag 2} & Beschreibung \\
+\end{tabular}	
+
+%Tabelle mit 2 Spalten, \MyLenTwo wird nicht benötigt
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\the\MyLenTwo}%
+		@{}p{\linewidth-\the\MyLen-\the\MyLenTwo}@{}}
+	\texttt{Eintrag 1} & noch was & Beschreibung \\
+	\texttt{Eintrag 2} & langer Text wird automatisch umgebrochen & Beschreibung \\
+\end{tabular}	
 
 \section{Section 3}
 Etc.

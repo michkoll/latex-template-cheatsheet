@@ -1,0 +1,106 @@
+\raggedright
+\footnotesize
+\begin{multicols}{3}	
+	% multicol parameters
+	% These lengths are set only within the two main columns
+	%\setlength{\columnseprule}{0.25pt}
+	\setlength{\premulticols}{1pt}
+	\setlength{\postmulticols}{1pt}
+	\setlength{\multicolsep}{1pt}
+	\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\underline{Betriebssystemforensik (allgemein)}} \\
+     \small by Koll, Michael \\
+     \url{https://github.com/michkoll/}
+\end{center}
+
+\section{Betriebssystem}
+\subsection{Architektur}
+\subsubsection{Monolithisch (S.22)}
+\settowidth{\MyLen}{\texttt{speichereffizienz.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{Geschwindigkeit} & schnell, minimaler Overhead; Funktionen optim. abgestimmt\\
+	\texttt{Sicherheit} & Risiko: ganzes BS im priv. Modus; Probleme einzerln Komp. Auswirkung auf ganzes BS\\
+	\texttt{Speichereffizienz} & Schlecht, ganzes BS im Speicher gehalten\\
+	\texttt{Wartbarkeit, Erweiterbarkeit} & Schlecht, da bei Änderungen viele Komponenten\\
+\end{tabular}
+
+\subsubsection{Geschichtet (S.23)}
+\settowidth{\MyLen}{\texttt{speichereffizienz.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{Geschwindigkeit} & Langsamer, da Funktionen Overhead, häufiger Kontextwechsel\\
+	\texttt{Sicherheit} & Teile des BS im User Mode, z.B. Treiber; Probleme Komponenten $\nrightarrow$ BS\\
+	\texttt{Speichereffizienz} & Gut, einzelne Module dynamisch nachgeladen und entladen\\
+	\texttt{Wartbarkeit, Erweiterbarkeit} & Besser, da Änderungen meist nur bei einzelnen Komponenten\\
+\end{tabular}
+
+\subsubsection{Mikrokernel (S.24)}
+\settowidth{\MyLen}{\texttt{speichereffizienz.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{Geschwindigkeit} & schlechte Performance, häufige Prozesswechsel und Interprozesskommunikation\\
+	\texttt{Sicherheit} & sicherheitskritischer Teil relativ klein; Dienste außerhalb Kern können Sicherheit und Stabilität nicht beeinflussen\\
+	\texttt{Speichereffizienz} & Gut, einzelne Module dynamisch nachgeladen und entladen\\
+	\texttt{Wartbarkeit, Erweiterbarkeit} & Sehr gut, einzelne Module können ausgetauscht werden (z.T. während Betrieb)\\
+\end{tabular}
+
+\subsection{Ziele}
+%\settowidth{\MyLen}{\texttt{speichereffizienz.spa}}
+\begin{tabular}{@{}p{\the\MyLen}@{}}
+	\texttt{}
+\end{tabular}
+
+
+
+\section{Windows}
+
+\subsection{Allgemein}
+\subsubsection{Windows Stations, Desktops und Session (S.34)}
+Authentifizierung Session-orientiert, \texttt{Session} beinhaltet mehrere \texttt{Stations}, \texttt{Stations} beinhalten Desktops mit Fenstern und GDI-Objekten. Sicherheitsbeschreiber eines Objekts ist mit \texttt{Station} verbunden, darüber Kontrolle von Benutzer zum Desktop
+
+\subsection{Prozesse und Dienste}
+\subsubsection{svchost.exe (Dienste) (S.138)}
+\begin{itemize}[leftmargin=*]
+	\item mit \texttt{tlist} laufende Prozesse mit Diensten auflisten (\texttt{tlist -m svchost.exe -s})
+	\item mit \texttt{Process-Explorer} farblich gekennzeichnete Dienste $\rightarrow$ Properties $\rightarrow$ Services
+	\item spezielle Programme wie z.B. \texttt{svchost-Analyzer}
+\end{itemize}
+
+\subsubsection{Gestartete Dienste in Registry}
+\path{HKLM\System\CurrentControlSet\Services} als Unterschlüssel
+
+\subsubsection{Mandatorische Zugriffsregeln (S.153)}
+\settowidth{\MyLen}{\texttt{breite.erste.spalte}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{No-<Write|Read>-Up} & Kein schreibender/lesender Zugriff von Prozessen mit niedrigem Level auf Objekte mit höherem Level (gleiches Level zugelassen) \\
+	\texttt{No-<Write|Read>-Down} & Kein schreibender/lesender Zugriff von Prozessen mit höherem Level auf Objekte mit niedrigerem Level (gleiches Level zugelassen) \\
+\end{tabular}
+\textbf{Default:} No-Write-Up (für alle Objekte), No-Read-Up (für Prozesse und Threads)
+
+\subsection{DACL (S.156)}
+Sicherheitsdeskriptor besteht aus \texttt{Header, SID Besitzer, SID Gruppe, DACL, SACL}\\
+\texttt{DACL} besteht aus ACEs mit \texttt{<Allow|Deny>, SID User, ACE-Bitmapp}\\
+\textbf{Regeln DACL}: Erst Einzel-ACE, dann Gruppe; Erst Verbote, dann Erlaubnisse; Reihenfolge von oben nach unten\\
+\texttt{Hinweis:} Beim Ändern bzw. lesen aufpassen auf Gruppenzugehörigkeit (Jeder)
+
+
+
+
+
+\subsection{Registry}
+
+
+
+
+
+
+% You can even have references
+\rule{0.3\linewidth}{0.25pt}
+\scriptsize
+\bibliographystyle{abstract}
+\bibliography{refFile}
+\end{multicols}
