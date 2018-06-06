@@ -551,7 +551,7 @@ endobj
 343 0 obj
 <<
 /Type /Annot
-/Border[0 0 1]/H/I/C[0 1 1]
+/Border[0 0 0]/H/I/C[0 1 1]
 /Rect [85.796 539.26 219.562 549.47]
 /Subtype/Link/A<</Type/Action/S/URI/URI(https://github.com/michkoll/)>>
 >>
@@ -664,7 +664,7 @@ endobj
 357 0 obj
 <<
 /Type /Annot
-/Border[0 0 1]/H/I/C[0 1 1]
+/Border[0 0 0]/H/I/C[0 1 1]
 /Rect [644.943 533.792 756.996 543.753]
 /Subtype/Link/A<</Type/Action/S/URI/URI(http://www.petges.lu/home/download)>>
 >>
@@ -672,7 +672,7 @@ endobj
 366 0 obj
 <<
 /Type /Annot
-/Border[0 0 1]/H/I/C[0 1 1]
+/Border[0 0 0]/H/I/C[0 1 1]
 /Rect [623.24 523.48 659.097 534.288]
 /Subtype/Link/A<</Type/Action/S/URI/URI(http://www.petges.lu/home/download)>>
 >>
@@ -680,7 +680,7 @@ endobj
 358 0 obj
 <<
 /Type /Annot
-/Border[0 0 1]/H/I/C[0 1 1]
+/Border[0 0 0]/H/I/C[0 1 1]
 /Rect [721.139 161.897 756.996 171.858]
 /Subtype/Link/A<</Type/Action/S/URI/URI(https://www.dcode.fr/timestamp-converter)>>
 >>
@@ -688,7 +688,7 @@ endobj
 367 0 obj
 <<
 /Type /Annot
-/Border[0 0 1]/H/I/C[0 1 1]
+/Border[0 0 0]/H/I/C[0 1 1]
 /Rect [602.074 151.585 740.024 162.393]
 /Subtype/Link/A<</Type/Action/S/URI/URI(https://www.dcode.fr/timestamp-converter)>>
 >>
@@ -696,7 +696,7 @@ endobj
 359 0 obj
 <<
 /Type /Annot
-/Border[0 0 1]/H/I/C[0 1 1]
+/Border[0 0 0]/H/I/C[0 1 1]
 /Rect [729.605 142.968 756.996 152.929]
 /Subtype/Link/A<</Type/Action/S/URI/URI(https://accessdata.com/product-download/registry-viewer-1-8-0-5)>>
 >>
@@ -704,7 +704,7 @@ endobj
 368 0 obj
 <<
 /Type /Annot
-/Border[0 0 1]/H/I/C[0 1 1]
+/Border[0 0 0]/H/I/C[0 1 1]
 /Rect [602.074 133.725 756.996 143.022]
 /Subtype/Link/A<</Type/Action/S/URI/URI(https://accessdata.com/product-download/registry-viewer-1-8-0-5)>>
 >>
@@ -712,7 +712,7 @@ endobj
 369 0 obj
 <<
 /Type /Annot
-/Border[0 0 1]/H/I/C[0 1 1]
+/Border[0 0 0]/H/I/C[0 1 1]
 /Rect [602.074 123.192 703.918 134]
 /Subtype/Link/A<</Type/Action/S/URI/URI(https://accessdata.com/product-download/registry-viewer-1-8-0-5)>>
 >>
@@ -720,7 +720,7 @@ endobj
 360 0 obj
 <<
 /Type /Annot
-/Border[0 0 1]/H/I/C[0 1 1]
+/Border[0 0 0]/H/I/C[0 1 1]
 /Rect [704.207 114.575 756.996 124.535]
 /Subtype/Link/A<</Type/Action/S/URI/URI(https://www.gaijin.at/dlregview.php)>>
 >>
@@ -728,7 +728,7 @@ endobj
 370 0 obj
 <<
 /Type /Annot
-/Border[0 0 1]/H/I/C[0 1 1]
+/Border[0 0 0]/H/I/C[0 1 1]
 /Rect [602.074 104.263 701.428 115.071]
 /Subtype/Link/A<</Type/Action/S/URI/URI(https://www.gaijin.at/dlregview.php)>>
 >>
@@ -848,7 +848,7 @@ endobj
 371 0 obj
 <<
 /Type /Annot
-/Border[0 0 1]/H/I/C[0 1 1]
+/Border[0 0 0]/H/I/C[0 1 1]
 /Rect [85.796 541.131 219.562 551.341]
 /Subtype/Link/A<</Type/Action/S/URI/URI(https://github.com/michkoll/)>>
 >>
@@ -856,7 +856,7 @@ endobj
 372 0 obj
 <<
 /Type /Annot
-/Border[0 0 1]/H/I/C[0 1 1]
+/Border[0 0 0]/H/I/C[0 1 1]
 /Rect [481.87 393.932 513.675 403.185]
 /Subtype/Link/A<</Type/Action/S/URI/URI(https://www.forensicswiki.org/wiki/List_of_Jump_List_IDs)>>
 >>
@@ -864,7 +864,7 @@ endobj
 377 0 obj
 <<
 /Type /Annot
-/Border[0 0 1]/H/I/C[0 1 1]
+/Border[0 0 0]/H/I/C[0 1 1]
 /Rect [278.325 384.468 491.972 393.765]
 /Subtype/Link/A<</Type/Action/S/URI/URI(https://www.forensicswiki.org/wiki/List_of_Jump_List_IDs)>>
 >>
@@ -1193,7 +1193,7 @@ endobj
 384 0 obj
 <<
 /Type /Annot
-/Border[0 0 1]/H/I/C[0 1 1]
+/Border[0 0 0]/H/I/C[0 1 1]
 /Rect [85.796 537.689 219.562 547.898]
 /Subtype/Link/A<</Type/Action/S/URI/URI(https://github.com/michkoll/)>>
 >>
@@ -7496,8 +7496,8 @@ endobj
 864 0 obj
 <<
  /Title (cheatsheet.pdf) /Creator (TeX) /Producer (pdfTeX 1.40.0) /Author (Michael Koll) /Subject (Forensik-Cheatsheets) /Keywords (pdflatex, latex,pdftex,tex, cheatsheet, forensics)/Author()/Title()/Subject()/Creator(LaTeX with hyperref package)/Producer(pdfTeX-1.40.18)/Keywords()
-/CreationDate (D:20180606131305+02'00')
-/ModDate (D:20180606131305+02'00')
+/CreationDate (D:20180606131519+02'00')
+/ModDate (D:20180606131519+02'00')
 /Trapped /False
 /PTEX.Fullbanner (This is MiKTeX-pdfTeX 2.9.6607 (1.40.18))
 >>
@@ -8373,7 +8373,7 @@ trailer
 << /Size 865
 /Root 863 0 R
 /Info 864 0 R
-/ID [<2A865011D314C66DC82252B862116B43> <2A865011D314C66DC82252B862116B43>] >>
+/ID [<116D6BC4B84A24A810A12414E2A0CE31> <116D6BC4B84A24A810A12414E2A0CE31>] >>
 startxref
 193172
 %%EOF
