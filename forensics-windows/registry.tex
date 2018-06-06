@@ -159,13 +159,13 @@ Aufbau der SID (S-1-5-21-[...]-1002):
 \settowidth{\MyLen}{\texttt{SID.length.}}
 \begin{tabular}{@{}p{\the\MyLen}%
 		@{}p{\linewidth-\the\MyLen}@{}}
-	\texttt{S} & identifiziert den Schlüssel als SID\\
+	\texttt{S} & Identifiziert den Schlüssel als SID\\
 	\texttt{1} & Revisionsnummer, Nummer der SID-Spezifikation\\
 	\texttt{5} & Autorität\\
 	\texttt{21-[...]} & Domänen-ID, identifiziert die Domäne oder den lokalen Computer, Wert ist variabel\\
 	\texttt{1002} & Benutzer-ID, relative ID (RID), >1000 für Profile die nicht standardmäßig generiert wurden
 \end{tabular}
-\texttt{SAM\textbackslash Domains\textbackslash Account\textbackslash Users\textbackslash <Benutzernummer>\textbackslash}
+Informationen aus SAM \texttt{SAM\textbackslash Domains\textbackslash Account\textbackslash Users\textbackslash <Benutzernummer>\textbackslash}
 \begin{tabular}{@{}p{\the\MyLen}%
 		@{}p{\linewidth-\the\MyLen}@{}}
 	\texttt{F} & Enthält Informationen wie Datum der letzten Passwortänderung und Datum der letzten Anmeldung vom Nutzer mit der Id <Benutzernummer>\\
