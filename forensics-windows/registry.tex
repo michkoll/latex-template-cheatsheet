@@ -159,13 +159,17 @@ Aufbau der SID (S-1-5-21-[...]-1002):
 \settowidth{\MyLen}{\texttt{SID.length.}}
 \begin{tabular}{@{}p{\the\MyLen}%
 		@{}p{\linewidth-\the\MyLen}@{}}
-	\texttt{S} & identifiziert den Schlüssel als SID\\
+	\texttt{S} & Identifiziert den Schlüssel als SID\\
 	\texttt{1} & Revisionsnummer, Nummer der SID-Spezifikation\\
 	\texttt{5} & Autorität\\
 	\texttt{21-[...]} & Domänen-ID, identifiziert die Domäne oder den lokalen Computer, Wert ist variabel\\
 	\texttt{1002} & Benutzer-ID, relative ID (RID), >1000 für Profile die nicht standardmäßig generiert wurden
 \end{tabular}
-
+Informationen aus SAM \texttt{SAM\textbackslash Domains\textbackslash Account\textbackslash Users\textbackslash <Benutzernummer>\textbackslash}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{F} & Enthält Informationen wie Datum der letzten Passwortänderung und Datum der letzten Anmeldung vom Nutzer mit der Id <Benutzernummer>\\
+\end{tabular}
 \section{Wichtige Pfade}
 \subsubsection{Systeminfo}
 \settowidth{\MyLen}{\texttt{HKLM.Software.Microsoft.WindowsNT}}
@@ -259,6 +263,8 @@ Microsoft Edge nutzt \texttt{\path{HKCU/Software/Classes/Local  Settings/Softwar
 	\texttt{Forensic Registry EDitor (fred)} & Untersuchung und Bearbeitung von HIVE-Dateien, vorgefertige Berichtsvorlagen\\
 	\texttt{RegRipper} & Extrahieren von spezifischen Informationen, Automatisierung durch Plugins und Profile\\
 	\texttt{DCODE} & Decodieren von Zeitstempeln (\url{https://www.dcode.fr/timestamp-converter})\\
+	\texttt{Access Data Registry Viewer} & Auslesen von Hive-Files (\url{https://accessdata.com/product-download/registry-viewer-1-8-0-5})\\
+	\texttt{RegView} & Auslesen von Hive-Files (\url{https://www.gaijin.at/dlregview.php})\\
 \end{tabular}
 
 % You can even have references
