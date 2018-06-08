@@ -47,12 +47,68 @@
 	\texttt{Wartbarkeit, Erweiterbarkeit} & Sehr gut, einzelne Module können ausgetauscht werden (z.T. während Betrieb)\\
 \end{tabular}
 
-\subsection{Ziele}
-%\settowidth{\MyLen}{\texttt{speichereffizienz.spa}}
-\begin{tabular}{@{}p{\the\MyLen}@{}}
-	\texttt{}
+\subsubsection{Vorteile virtuelles BS}
+Sandbox verbesserte Sicherheit durch Abschottung; bessere Ausnutzung des Systems durch mehrere VMs; herstellen kompatibler Laufzeitumgebungen\\
+
+\subsection{Ziele (S.12)}
+\settowidth{\MyLen}{\texttt{speichereffizienz.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{Unterstützung des Anwenders} & \texttt{Abstraktion der Hardware} (Nummerierte Datenblöcke der HDD werden durch Reihenfolge, Verkettung und Verknüpfung zu Datei), \texttt{Bereitstellen von Dienstfunktionen} (Dateien öffnen, lesen, schreiben, schließen), \texttt{Verbergen irrelevanter Details} (Nummerierung Datenblöcke für Anwender nicht sichtbar)\\
+	\texttt{Optimierung der Rechnerauslastung} & Parallele Nutzung Rechnerkomponenten, mehrere Aufgaben quasiparallel\\
+	\texttt{Zuverlässigkeit} & Schutzmechanismus gegenseitig störender Prozesse, Abfangen von Ausnahmesituationen, Verhindern von blockierenden Prozessen\\
+	\texttt{Portabilität} & Programme auf verschiedenen Plattformen lauffähig\\
+\end{tabular}
+\textbf{Nicht erfüllte Zuverlässigkeit}\\
+Prozess belegt zu viel Speicher, so dass andere Prozesse nicht ausgeführt werden können\\
+Abbruch mit Ctrl+C funktioniert nicht, da Signal auf Ignorieren steht\\
+Prozess zieht alle Prozessorleistung, so dass andere Prozesse blockiert sind (unfaires Scheduling)
+
+\subsection{Aufgaben (S.14)}
+\settowidth{\MyLen}{\texttt{Anwenderschnittstelle.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{Programm- und Prozessverwaltung} & Steuern, Erzeugen, Starten, Entfernen von Prozessen; Laden von Programmen von HDD in RAM; Leerlaufprozess; Kommunikation und Synchronisation von Prozessen\\
+	\texttt{Anwenderschnittstelle} & Kommandoebene, graphische Bedienoberfläche, Systemaufrufe zwischen BS und Programmen\\
+	\texttt{Verwalten von Betriebsmitteln} & Aufteilen der Betriebsmittel, Trennung Benutzerbereiche, Schutz, Prüfung Zugang\\
+	\texttt{Verbindungen mit anderen Rechnern} & \\
 \end{tabular}
 
+\subsection{Begriffe}
+\settowidth{\MyLen}{\texttt{quasiparallel.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{Parallel} & Gleichzeitige Abarbeitung von Prozessen, jeder Prozess läuft auf eigener CPU\\
+	\texttt{Quasiparallel} & Abwechselnde Abarbeitung, alle Prozesse laufen auf gleicher CPU\\
+	\texttt{Programm} & besteht aus Vorschriften/Anweisungen in formaler Sprache; Ausführen zur Bewältigung bestimmter Aufgaben\\
+	\texttt{Prozess} & ablaufendes Programm mit konkreten Daten, besitzt \texttt{Rechte, Registerinhalte und Speicher}; Zustände \texttt{running, ready oder waiting}\\
+	\texttt{Threads} & Untereinheit von Prozessen, teilen sich denselben virtuellen Adressraum, Prozesswechsel schneller\\
+	\texttt{Leerlaufprozess} & Prozessor führt ständig Befehlszyklen aus, Leerlaufprozess verbraucht diese mit NOP-Anweisungen\\
+\end{tabular}
+
+\section{Dateisystem}
+\subsubsection{Zusammenhängende Belegung (S.104)}
+\settowidth{\MyLen}{\texttt{Belegungstabelle.spa}}
+\begin{tabular}{@{}p{\the\MyLen}@{}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+\texttt{Belegungstabelle} & Datei, Start, Länge\\
+\end{tabular}
+
+\subsubsection{Verteilte Belegung verkettete Listen (FAT) (S.105)}
+\settowidth{\MyLen}{\texttt{Belegungstabelle.spa}}
+\begin{tabular}{@{}p{\the\MyLen}@{}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{Belegungstabelle} & Datei, Start\\
+	\texttt{Hilfstabelle (FAT)} & Verweis auf nächste Adresse, Dateiende mit EOF\\
+\end{tabular}
+
+\subsubsection{Verteilte Belegung mittels Index-Liste (S.106)}
+\settowidth{\MyLen}{\texttt{Belegungstabelle.spa}}
+\begin{tabular}{@{}p{\the\MyLen}@{}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{Belegungstabelle} & Datei, Index-DU\\
+	\texttt{Index-DU} & Verweise auf DUs (falls zu lang Verweis auf weitere Index-DU)\\
+\end{tabular}
 
 
 \section{Windows}
@@ -72,8 +128,17 @@ Authentifizierung Session-orientiert, \texttt{Session} beinhaltet mehrere \textt
 \subsubsection{Gestartete Dienste in Registry}
 \path{HKLM\System\CurrentControlSet\Services} als Unterschlüssel
 
+\subsubsection{laufende Prozesse PIDs und TIDs}
+mit Process Explorer; \texttt{PID} in Liste laufende Prozesse; \texttt{TID} Prozesseigenschaften $\rightarrow$ Threads\\
+
+\subsubsection{Registryzugriffe von Prozessen}
+Mit Process Explorer und Process Hacker; Möglichkeit über Process Monitor Registryzugriffe zu protokollieren (Software installieren $\rightarrow$ mit Process Monitor analysieren)\\
+
+\subsubsection{Ausgeführte Dienste}
+z.B. über \texttt{msc} (services) oder Registry (siehe oben)
+
 \subsubsection{Mandatorische Zugriffsregeln (S.153)}
-\settowidth{\MyLen}{\texttt{breite.erste.spalte}}
+\settowidth{\MyLen}{\texttt{No-<Write|Read>-Down.spa}}
 \begin{tabular}{@{}p{\the\MyLen}%
 		@{}p{\linewidth-\the\MyLen}@{}}
 	\texttt{No-<Write|Read>-Up} & Kein schreibender/lesender Zugriff von Prozessen mit niedrigem Level auf Objekte mit höherem Level (gleiches Level zugelassen) \\
@@ -87,11 +152,69 @@ Sicherheitsdeskriptor besteht aus \texttt{Header, SID Besitzer, SID Gruppe, DACL
 \textbf{Regeln DACL}: Erst Einzel-ACE, dann Gruppe; Erst Verbote, dann Erlaubnisse; Reihenfolge von oben nach unten\\
 \texttt{Hinweis:} Beim Ändern bzw. lesen aufpassen auf Gruppenzugehörigkeit (Jeder)
 
+\subsection{Festplatten und Drucker}
+\settowidth{\MyLen}{\texttt{option.2.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{Option 1} & In regedit \path{HKEY_LOCAL_MACHINE\SYSTEM} exportieren, in RegRipper Report erstellen\\
+	\texttt{Option 2} & Systemwerkzeuge wie \texttt{msinfo} \\
+\end{tabular}
 
+\subsection{Forensische Anwendungsfälle}
+\subsubsection{Suchen mit X-Ways}
+\settowidth{\MyLen}{\texttt{Nach.Unicode.String.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{Nach Hexwert in Bild} & Image einbinden, Datei nach hex-Wert durchsuchen\\
+	\texttt{Nach ASCII-String in Dokument} & Image einbinden, nach Text-Wert suchen mit ASCII-Codepage \\
+	\texttt{Nach Unicode-String in Dokument} & Image einbinden, nach Text-Wert suchen mit Unicode-Codepage\\
+	\texttt{in docx-Datei} & Image einbinden, Indexieren, Index nach Text-Wert durchsuchen mit ASCII- oder Unicode-Codepage
+\end{tabular}
 
+\subsubsection{Carving}
+Carving-Programm durchsucht Dokument von Anfang nach Anfangssignatur, Markierung, Suchen Richtung Ende nach Endesignatur; Bereich dazwischen in Datei kopieren
 
+\subsubsection{Schattenkopie}
+\texttt{Volume-Shadow-Copy-Service (VSS)} hält Dateien in mehreren Versionen, Versionen können über Eigenschaften $\rightarrow$ Versionen eingesehen werden. Zur Analyse Schattenkopie mounten
 
-\subsection{Registry}
+\subsubsection{Thumbs.db}
+Inhalte können mit \texttt{Thumb.db-Viewer} sichtbar gemacht werden (bildlich oder als Liste); Ungefähres Erscheinungsbild, Speicherort des Originals und Veränderungsdatum kann eingesehen werden
+
+\subsubsection{Überwachter Ordnerzugriff}
+(Details auf eigenem CheatSheet)\\
+Angriffsmöglichkeiten prüfen, dazu:
+\settowidth{\MyLen}{\texttt{Standardverzeichnisse.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{Ist überwachter Ordnerzugriff aktiviert?} &  Windows Defender, Registry oder Gruppenrichtlinien\\
+	\texttt{Standardverzeichnisse} & Falls aktiviert, sind diese geschützt\\
+	\texttt{Zusätzliche Verzeichnisse} & Schauen ob Verzeichnis hinzugefügt (in Registry oder Windows Defender)\\
+	\texttt{Erlaubte Anwendungen} & Schauen ob Anwendungen erlaubt sind (in Registry)\\
+\end{tabular}
+
+\subsubsection{Nutzung OneDrive}
+Anhaltspunkte zur Nutzung\\
+\settowidth{\MyLen}{\texttt{ClientFirstSignInTimestamp.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{UserFolder} & Schauen ob vorhanden\\
+	\texttt{ClientFirstSignInTimestamp} & Erster Login des Nutzers\\
+	\texttt{UserCID} & Falls vorhanden muss genutzt worden sein\\
+	\texttt{Logdateien} & Infos zu Anzahl Dateien, Up-/Downloadgeschwindigkeit, UserCID\\
+\end{tabular}
+
+\section{UNIX}
+\subsection{Systemzustand}
+Werkzeuge verwenden Informationen aus \path{/proc}-Verzeichnis\\
+\settowidth{\MyLen}{\texttt{Speicherauslastung.spa}}
+\begin{tabular}{@{}p{\the\MyLen}%
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{Uptime} & \path{/proc/cpuinfo}\\
+	\texttt{Systemauslastung} & \path{/proc/stat}\\
+	\texttt{Speicherauslastung} & \path{/proc/meminfo}\\
+	\texttt{Version BS} & \path{/proc/version} \\
+	\texttt{Dateisysteme} & \path{/proc/filesystem} \\
+\end{tabular}
 
 
 
