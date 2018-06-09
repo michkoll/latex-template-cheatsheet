@@ -13,7 +13,6 @@
 \begin{center}
      \Large{\underline{Windows 10-Forensik}} \\
      \small by Koll, Michael \\
-     \url{https://github.com/michkoll/}
 \end{center}
 
 \section{Allgemein}
@@ -223,7 +222,7 @@ $\rightarrow$\path{C:\Users\<username>\AppData\Local\Packages\Microsoft.Microsof
 
 \subsubsection{Werkzeuge}
 Fazit: Tools gute Unterstützung, manuell bringt mehr
-\settowidth{\MyLen}{\texttt{browserhistoryview.spa}}
+\settowidth{\MyLen}{\texttt{browserhistoryview.s}}
 \begin{tabular}{@{}p{\the\MyLen}%
 		@{}p{\linewidth-\the\MyLen}@{}}
 	\texttt{IECacheView} & Zeigt Cachedateien von IE und Edge (Dateiname, -größe, -typ, URL, Zeitstempel, Cachedateipfad)\\
@@ -245,7 +244,7 @@ Fazit: Tools gute Unterstützung, manuell bringt mehr
 
 \subsubsection{Konfigurations- und Diagnostikdaten}
 Ausgehend vom One-Drive-Verzeichnis:
-\settowidth{\MyLen}{\texttt{..logs.personal.synclog.spa}}
+\settowidth{\MyLen}{\texttt{..logs.personal.synclog.s}}
 \begin{tabular}{@{}p{\the\MyLen}%
 		@{}p{\linewidth-\the\MyLen}@{}}
 	\path{.\logs\Personal\SyncDiagnostics.log} & Down-\textbackslash Uploadgeschwindigkeit, Ausstehende Down-\textbackslash Uploads, verfügbarer Speicherplatz lokal, UserCID (siehe REG), Anzahl Dateien und Verzeichnisse\\
@@ -283,7 +282,7 @@ SQLite-Datenbank mit WAL-Verfahren: Änderungen in Datei, bei Erreichen des Chec
 
 \subsubsection{Struktur und Inhalt}
 Relevante Tabellen in \texttt{wpndatabase.db}
-\settowidth{\MyLen}{\texttt{....accounts.personal.spa}}
+\settowidth{\MyLen}{\texttt{NotificationHandler.spa}}
 \begin{tabular}{@{}p{\the\MyLen}%
 		@{}p{\linewidth-\the\MyLen}@{}}
 	\texttt{NotificationHandler} & Anwendungen, die zu Benachrichtigungen berechtigt sind (Zuordnung über PrimaryID$\rightarrow$ AppID,GUID)\\
@@ -329,6 +328,7 @@ Parameter in \path{HKLM\Software\Policies\Microsoft\Windows\Windows Search}
 
 % You can even have references
 \rule{0.3\linewidth}{0.25pt}
+\\Fehler und Verbesserungen bitte melden: https://github.com/michkoll/latex-template-cheatsheet/issues
 \scriptsize
 \bibliographystyle{abstract}
 \bibliography{refFile}
