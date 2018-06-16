@@ -1,1 +1,0 @@
-powershell -File BuildDocumentOnWindows.ps1 -texFile cheatsheet.tex -openDocumentAtEnd
