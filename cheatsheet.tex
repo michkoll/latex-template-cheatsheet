@@ -13,6 +13,8 @@
 \usepackage[ngerman]{babel}
 %\PassOptionsToPackage{obeyspaces}{url}
 \usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+
 
 \pdfinfo{
   /Title (cheatsheet.pdf)
@@ -37,9 +39,9 @@
 
 % Redefine section commands to use less space
 \makeatletter
-\renewcommand{\section}{\@startsection{section}{1}{0mm}%
-                                {-1ex plus -.5ex minus -.2ex}%
-                                {0.5ex plus .2ex}%x
+\renewcommand{\section}{\@startsection{section}{1}{0mm}
+                                {-1ex plus -.5ex minus -.2ex}
+                                {0.5ex plus .2ex}
                                 {\normalfont\large\bfseries}}
 \renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
                                 {-1explus -.5ex minus -.2ex}%
@@ -50,6 +52,18 @@
                                 {1ex plus .2ex}%
                                 {\normalfont\small\bfseries}}
 \makeatother
+
+% farbig (gelb) hinterlegte Überschriften für sections
+\usepackage{xcolor}
+\usepackage[explicit]{titlesec}
+\titleformat{\section}
+{\normalfont\large\bfseries}
+{-1ex plus -.5ex minus -.2ex}
+{0.5ex plus .2ex}
+{\colorbox{yellow}{{#1}}}
+
+
+
 
 % Define BibTeX command
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
