@@ -23,7 +23,7 @@
 \section{Verhinderung von Disassemblierung}
 \lipsum
 \section{Obfuscation}
-Obfuscation bezeichnet allgemein eine Veränderung des Programmcodes, um die Lesbarkeit bzw. das Reverse Engineering des Programms zu erschweren. In den folgenden Subsections werden einige Techniken beschrieben.
+Obfuscation bezeichnet allgemein eine Veränderung des Programmcodes, um die Lesbarkeit bzw. das Reverse Engineering des Programms zu erschweren. Das Verhalten des Programs soll dabei gleich bleiben.\footnote{Auch über Seiteneffekte im Verhalten sollte das obfuskierte Programm wenn möglich nicht vom \enquote{Originalprogramm} unterscheidbar sein.} In den folgenden Unterabschnitten werden einige Techniken zur Obfuscation beschrieben.
 \section{Function-Splitting}
 Beim Function-Splitting wird eine Funktion f \enquote{kopiert} (im Folgenden f' genannt) (und dann im Idealfall an einer ganz anderen Stelle im Programm abgelegt und inhaltlich möglichst weiter obfuscatet, damit man möglichst schwer erkennen kann, dass die beiden Funktionen inhaltlich das gleiche machen). Wenn im bisherigen Programm f von 2 Stellen (im Folgenden g1 und g2 genannt) aus aufgerufen wird, dann wird der Programmcode prinzipiell dahingehend angepasst, dass g1 f aufruft und g2 f' aufruft. Es ist dadurch schwerer erkennbar, dass an dieser Stelle g1 und g2 inhaltlich die gleiche Funktion ausführen.
 
