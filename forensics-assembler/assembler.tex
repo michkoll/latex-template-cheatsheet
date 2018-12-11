@@ -10,7 +10,20 @@
      \Large{\underline{Assembler (allgemein)}} \\
 \end{center}
 
-\section{Allgemeines}
+\section{Allgemeines}\footnote{Dieses Cheatsheet bezieht sich auf IA-32-Assembler}
 \settowidth{\MyLen}{\texttt{option.2.spa}}
-\lipsum
+\section{Register}
+Verwendung von Registern:
+\begin{itemize}
+\item eax: Zwischenwerte/Rückgabewerte bei Berechnungen
+\item ebx: Adressierungen (Base)
+\item ecx: Zählerregister (Counter)
+\item edx: I/O-Daten (Data)
+\item esi: Quelloperand-Speicheradresse für Stringoperationen (Source)
+\item edi: Zieloperand-Speicheradresse für Stringoperationen (Destination)
+\item esp: Enthält die Adresse des obersten Stackelements (Stackpointer)
+\item ebp: Enthält die Adresse des aktuellen Stack-Frames
+\item eip: Enthält die aktuell auszuführende Instruktion (Instructionpointer)
+\item eflags: Enthält diverse Flags (Zeroflag, Overflow-Flag usw.)
+\end{itemize}
 \end{multicols}
