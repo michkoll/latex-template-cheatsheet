@@ -36,4 +36,6 @@ Beim Dekompilieren wird aus einem kompilierten Programm der Quelltext rekonstrui
 \section{Disassemblierung}
 Als Disassemblierung bezeichnet man einen Prozess, der aus einem kompilierten Programm die Maschinencode-Befehle in Assebler-Befehle zurück übersetzt. Dieser Vorgang ist in aller Regel eindeutig und automatisiert durchführbar.
 \subsection{Verhinderung von Disassemblierung}
+\subsubsection{Unaligned Branches}
+Maschinencode-Befehle haben keine einheitliche Länge. Dadurch können Opcodes in anderen Opcodes versteckt werden können. Wenn diese Eigenschaft ausgenutzt wird, kommen beim seriellen Disassemblieren möglicherweise andere Befehlsabfolgen zu Stande als bei der Ausführung des Programms. 
 \end{multicols}
