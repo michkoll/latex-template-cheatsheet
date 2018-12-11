@@ -10,20 +10,48 @@
      \Large{\underline{Assembler (allgemein)}} \\
 \end{center}
 
-\section{Allgemeines}\footnote{Dieses Cheatsheet bezieht sich auf IA-32-Assembler}
+\section{Allgemeines}\footnote{Dieses Cheatsheet bezieht sich hauptsächlich auf IA-32-Assembler}
 \settowidth{\MyLen}{\texttt{option.2.spa}}
 \section{Register}
-Verwendung von Registern:
+\subsection{Verwendung der Register}
 \begin{itemize}
+\item [\textbf{General purpose Register}]
 \item eax: Zwischenwerte/Rückgabewerte bei Berechnungen
 \item ebx: Adressierungen (Base)
 \item ecx: Zählerregister (Counter)
 \item edx: I/O-Daten (Data)
 \item esi: Quelloperand-Speicheradresse für Stringoperationen (Source)
 \item edi: Zieloperand-Speicheradresse für Stringoperationen (Destination)
+\item [\textbf{Special purpose Register}]
 \item esp: Enthält die Adresse des obersten Stackelements (Stackpointer)
 \item ebp: Enthält die Adresse des aktuellen Stack-Frames
 \item eip: Enthält die aktuell auszuführende Instruktion (Instructionpointer)
 \item eflags: Enthält diverse Flags (Zeroflag, Overflow-Flag usw.)
+\item [\textbf{Segment-Register}]
+\item cs: Codesegment
+\item ds: Datasegment
+\item es: Extrasegment
+\item ss: Stacksegment
 \end{itemize}
+\subsection{Verwendung der Flags}
+\begin{itemize}
+\item CF (Carry-Flag): TODO
+\item PF (Parity-Flag): TODO
+\item AF (Adjust-Flag): TODO
+\item ZF (Zero-Flag): Ist 1, wenn das Ergebnis der letzten Operation 0 war.
+\item SF (Sign-Flag): TODO
+\item TF (Trap-Flag): TODO
+\item IF (Interrupt-Enabled-Flag): TODO
+\item DF (Direction-Flag): TODO
+\item OF (Overflow-Flag): TODO
+\item IOPL (IO-Privilege-Level): TODO
+\item NT (Nested-Task): TODO
+\item RF (Resume-Flag): TODO
+\item VM (Virtuel-8086-Mode): TODO
+\item AC (Alignment-Check): TODO
+\item VIF (Virtual-Interrupt-Flag): TODO
+\item VIP (Virtual-Interrupt-Pending): TODO
+\item ID (Able to use CPUID instruction): TODO
+\end{itemize}
+
 \end{multicols}
