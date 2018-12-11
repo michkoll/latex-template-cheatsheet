@@ -20,7 +20,6 @@
 	\texttt{WinDbg} & Debugger für Windows Kernel- und Usermode, der die Analyse von crash dumps und CPU-Register erlaubt.\\
 \end{tabular}
 \lipsum
-\lipsum
 \section{Obfuscation}
 Obfuscation bezeichnet allgemein eine Veränderung des Programmcodes, um die Lesbarkeit bzw. das Reverse Engineering des Programms zu erschweren. Das Verhalten des Programs soll dabei gleich bleiben.\footnote{Auch über Seiteneffekte im Verhalten sollte das obfuskierte Programm wenn möglich nicht vom \enquote{Originalprogramm} unterscheidbar sein.} In den folgenden Unterabschnitten werden einige Techniken zur Obfuscation beschrieben.
 \section{Function-Splitting}
@@ -38,4 +37,14 @@ Als Disassemblierung bezeichnet man einen Prozess, der aus einem kompilierten Pr
 \subsection{Verhinderung von Disassemblierung}
 \subsubsection{Unaligned Branches}
 Maschinencode-Befehle haben keine einheitliche Länge. Dadurch können Opcodes in anderen Opcodes versteckt werden können. Wenn diese Eigenschaft ausgenutzt wird, kommen beim seriellen Disassemblieren möglicherweise andere Befehlsabfolgen zu Stande als bei der Ausführung des Programms. 
+\section{Anti-Debug-Maßnahmen}
+\subsection{Angehängte Debugger abfragen}
+Es gibt die Funktionen, um direkt abzufragen, ob ein Debugger an das Programm angehängt ist. Im Wesentlichen sind dies:\\
+-\href{https://msdn.microsoft.com/en-us/library/ms680345(VS.85).aspx}{IsDebuggerPresent} \\
+-\href{https://msdn.microsoft.com/en-us/library/ms679280(VS.85).aspx}{CheckRemoteDebuggerPresent \\
+Dass diese Funktionen benutzt werden, kann ein Indiz dafür sein, dass das Programm Debugging erschweren möchte. Ein Programm kann sich in dem Fall beliebig anders verhalten, wenn mit diesen Methoden festgestellt wird, dass ein Debugger angehängt ist.
+\subsection{Timestamp-Analyse}
+Bei normaler Programmausführung werden Funktionen relativ schnell hintereinander ausgeführt. Wenn die Ausführung einer Funktion sehr viel länger dauert als normalerweise, ist dies ein Indiz dafür, dass in der Zwischenzeit ein Breakpoint getriggert worden ist und somit das Programm offensichtlich gerade analysiert wird. Ein Programm kann sich in dem Fall anschließend beliebig anders verhalten.
+\subsection{Virtuelle Maschinen}
+Es ist relativ leicht, zu erkennen, ob ein Programm in einer virtuellen Maschine ausgeführt wird. Programme können sich dementsprechend beliebig anders verhalten, wenn sie in einer VM ausgeführt werden. Da heute vor allem im kommerziellen Bereich aber grundsätzlich viele Programme in VMs laufen (z. B. Webserver etc.), macht diese Anti-Debug-Maßnahme nur bei Programmen Sinn, die darauf ausgelegt sind, normalerweise nicht in einer virtuellen Maschine zu laufen (z. B. bei Desktoprechnern von Privatpersonen).
 \end{multicols}
