@@ -19,7 +19,6 @@
 	\texttt{OllyDbg} & Etablierter Debugger für 32-Bit Anwendungen auf Windows.\\
 	\texttt{WinDbg} & Debugger für Windows Kernel- und Usermode, der die Analyse von crash dumps und CPU-Register erlaubt.\\
 \end{tabular}
-\lipsum
 \section{Obfuscation}
 Obfuscation bezeichnet allgemein eine Veränderung des Programmcodes, um die Lesbarkeit bzw. das Reverse Engineering des Programms zu erschweren. Das Verhalten des Programs soll dabei gleich bleiben.\footnote{Auch über Seiteneffekte im Verhalten sollte das obfuskierte Programm wenn möglich nicht vom \enquote{Originalprogramm} unterscheidbar sein.} In den folgenden Unterabschnitten werden einige Techniken zur Obfuscation beschrieben.
 \section{Function-Splitting}
@@ -47,4 +46,7 @@ Dass diese Funktionen benutzt werden, kann ein Indiz dafür sein, dass das Progr
 Bei normaler Programmausführung werden Funktionen relativ schnell hintereinander ausgeführt. Wenn die Ausführung einer Funktion sehr viel länger dauert als normalerweise, ist dies ein Indiz dafür, dass in der Zwischenzeit ein Breakpoint getriggert worden ist und somit das Programm offensichtlich gerade analysiert wird. Ein Programm kann sich in dem Fall anschließend beliebig anders verhalten.
 \subsection{Virtuelle Maschinen}
 Es ist relativ leicht, zu erkennen, ob ein Programm in einer virtuellen Maschine ausgeführt wird. Programme können sich dementsprechend beliebig anders verhalten, wenn sie in einer VM ausgeführt werden. Da heute vor allem im kommerziellen Bereich aber grundsätzlich viele Programme in VMs laufen (z. B. Webserver etc.), macht diese Anti-Debug-Maßnahme nur bei Programmen Sinn, die darauf ausgelegt sind, normalerweise nicht in einer virtuellen Maschine zu laufen (z. B. bei Desktoprechnern von Privatpersonen).
+\subsection{Libraries}
+\subsubsection{MSVCRT.DLL}
+Enthält die Funktionen der C-Standard-Bibliothek für den von Microsoft entwickelten Visual C++ Compiler von Version 4.2 bis 6.0.
 \end{multicols}
