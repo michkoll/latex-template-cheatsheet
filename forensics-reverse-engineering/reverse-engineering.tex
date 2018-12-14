@@ -40,7 +40,7 @@ Maschinencode-Befehle haben keine einheitliche Länge. Dadurch können Opcodes i
 \subsection{Angehängte Debugger abfragen}
 Es gibt die Funktionen, um direkt abzufragen, ob ein Debugger an das Programm angehängt ist. Im Wesentlichen sind dies:\\
 -\href{https://msdn.microsoft.com/en-us/library/ms680345(VS.85).aspx}{IsDebuggerPresent} \\
--\href{https://msdn.microsoft.com/en-us/library/ms679280(VS.85).aspx}{CheckRemoteDebuggerPresent \\
+-\href{https://msdn.microsoft.com/en-us/library/ms679280(VS.85).aspx}{CheckRemoteDebuggerPresent} \\
 Dass diese Funktionen benutzt werden, kann ein Indiz dafür sein, dass das Programm Debugging erschweren möchte. Ein Programm kann sich in dem Fall beliebig anders verhalten, wenn mit diesen Methoden festgestellt wird, dass ein Debugger angehängt ist.
 \subsection{Timestamp-Analyse}
 Bei normaler Programmausführung werden Funktionen relativ schnell hintereinander ausgeführt. Wenn die Ausführung einer Funktion sehr viel länger dauert als normalerweise, ist dies ein Indiz dafür, dass in der Zwischenzeit ein Breakpoint getriggert worden ist und somit das Programm offensichtlich gerade analysiert wird. Ein Programm kann sich in dem Fall anschließend beliebig anders verhalten.
