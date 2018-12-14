@@ -10,6 +10,14 @@
      \Large{\underline{Datenträgerforensik (allgemein)}} \\
 \end{center}
 
+\section{Dateisysteme}
+\begin{tabular}{llll}
+ & NTFS & exFAT & FAT32 \\
+Max. Größe & 16EB & 128PB & 2TB\\
+Max. Dateigröße & ~16TB & 16EB & 4GB\\
+Max. Länge von Dateinamen & 255 & 255 & 255\\
+Anwendung & Windows; externe Festplatten & diverses & USB-Sticks\\
+ \end{tabular}
 \section{Tools}
 \settowidth{\MyLen}{\texttt{option.2.spa}}
 \begin{tabular}{@{}p{\the\MyLen}
@@ -31,4 +39,7 @@
 	\texttt{Testdisk} & Programm zum Wiederherstellen von gelöschten Dateien und Partitionen.\\
 	\texttt{xxd} & Konsolen-basiertes Tool für Linux zum Anzeigen des Hex-Dumps einer Datei.\\
 \end{tabular}
+\section{Anderes}
+\subsection{LUKS}
+Abkürzung für \enquote{Linux Unified Key Setup}. LUKS ist eine Erweiterung von dm-crypt und fügt den verschlüsselten Daten einen Header hinzu. Einen LUKS-Container erkennt man am Header. Dieser beginnt mit den Bytes \enquote{4C 55 4B 53 BA BE}.
 \end{multicols}
