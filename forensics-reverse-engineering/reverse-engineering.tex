@@ -38,6 +38,8 @@ Als Disassemblierung bezeichnet man einen Prozess, der aus einem kompilierten Pr
 \subsubsection{Unaligned Branches}
 Maschinencode-Befehle haben keine einheitliche Länge. Dadurch können Opcodes in anderen Opcodes versteckt werden können. Wenn diese Eigenschaft ausgenutzt wird, kommen beim seriellen Disassemblieren möglicherweise andere Befehlsabfolgen zu Stande als bei der Ausführung des Programms. 
 \section{Anti-Debug-Maßnahmen}
+\subsubsection{int 3}
+Die \enquote{int 3}-Instruktion wird von Debuggern benutzt, um einen Breakpoint zu setzen/zur Laufzeit zu erkennen. Wenn \enquote{int 3} im bereits im Programmcode aufgefunden wird, deutet das auf eine Anit-Debug-Maßnahme hin. \enquote{int 3} kann durch \enquote{nop} (\enquote{No operation}-Instruktion) ersetzt werden, um \enquote{int 3} beim Debuggen zu überspringen.
 \subsection{Angehängte Debugger abfragen}
 Es gibt die Funktionen, um direkt abzufragen, ob ein Debugger an das Programm angehängt ist. Im Wesentlichen sind dies:\\
 -\href{https://msdn.microsoft.com/en-us/library/ms680345(VS.85).aspx}{IsDebuggerPresent} \\
