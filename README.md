@@ -1,6 +1,6 @@
 # latex-template-cheatsheet
 
-Generating easy cheatsheets for different topics
+Generating easy cheatsheets for different topics. Download the <a href="https://github.com/michkoll/latex-template-cheatsheet/raw/master/cheatsheet.pdf" target="_blank">current cheatsheet</a> to see an example.
 
 ## Using
 
