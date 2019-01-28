@@ -41,5 +41,7 @@ Anwendung & \begin{tabular}[x]{@{}c@{}}Windows,\\externe\\Datenträger\end{tabul
 \end{tabular}
 \section{Anderes}
 \subsection{LUKS}
-Abkürzung für \enquote{Linux Unified Key Setup}. LUKS ist eine Erweiterung von dm-crypt und fügt den verschlüsselten Daten einen Header hinzu. Einen LUKS-Container erkennt man am Header. Dieser beginnt mit den Bytes \enquote{4C 55 4B 53 BA BE}.
+Abkürzung für \enquote{Linux Unified Key Setup}. LUKS ist eine Erweiterung von dm-crypt und fügt den verschlüsselten Daten einen Header hinzu. Einen LUKS-Container erkennt man am Header. Dieser beginnt mit den Bytes \enquote{4C 55 4B 53 BA BE}.\\
+Ein LUKS-Container kann beispielsweise mit losetup eingebunden (gemountet) werden. Ein typischer Aufruf kann so aussehen:\\
+sudo losetup -o 11071426702 /dev / loop3 myImage.img\\
 \end{multicols}
