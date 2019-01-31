@@ -21,10 +21,9 @@ DSL-Programmiersprachen sind nicht dafür geeignet, beliebige Softwareentwicklun
 \subsection{Assembler}
 Ein Assemblierungsprogramm übersetzt Assembler-Befehle direkt in Maschinencode. Beim Umkehrvorgang (Disassemblieren) kann der Assemblercode weitesgehend wieder hergestellt werden. Direkt in Assembler zu programmieren ist heute nur noch selten gebräuchlich und nicht praxistauglich für große Softwareprojekte. Für spezielle Anwendungen kann es allerdings manchmal sinnvoll (oder sogar erforderlich) sein, Assemblercode zu schreiben. Anbieten tut sich dies bei speziellen Aufgaben, die hinsichtlich der Performance optimiert werden sollen. Da Programmierung in Assembler die hardwarenächste Art ist, zu programmieren, die in der Praxis auffindbar ist. 
 \subsection{Kompilierung}
-Bei Sprachen wie C oder C++ wird der Programmcode kompiliert. Das bedeutet, dass der Programmcode vom Compiler in Maschinencode-Befehle übersetzt wird, wodurch der Programmierer durch den Kompilier-Vorgang eine ausführbare Datei (z. B. .exe-Datei) erhält. Dies kann mit Aufrufen wie
-\begin{minted}
-gcc MyProgram.c -o MyProgram.exe 
-\end{minted}
+Bei Sprachen wie C oder C++ wird der Programmcode kompiliert. Das bedeutet, dass der Programmcode vom Compiler in Maschinencode-Befehle übersetzt wird, wodurch der Programmierer durch den Kompilier-Vorgang eine ausführbare Datei (z. B. .exe-Datei) erhält. Dies kann mit Aufrufen wie\\
+gcc MyProgram.c -o MyProgram.exe\\
+
 erfolgen. Programme von den meisten GPL-Programmiersprachen müssen vor der Ausführung kompiliert werden. Der Umkehrvorgang zur Kompilierung ist Dekompilierung. Es gibt Tools, zur Dekompilierung von Programmen, allerdings ist die Dekompilierung nicht eindeutig und bringt daher als Ergebnis nicht den Original-Programmcode eines Programms hervor. Dies kann im Wesentlichen folgende Gründe haben:\\
 \begin{itemize}
 \item Der Compiler optimiert den Programmcode in der Regel soweit wie möglich, um ihn beispielsweise performanter zu machen.
@@ -72,7 +71,7 @@ Langfristig plant Microsoft, die Feature-Entwicklung auf C\# zu fokussieren und 
 \subsection{VB}
 VB (auch \enquote{Visual Basic}, nicht zu verwechseln mit VB.Net) ist eine Skriptsprache und der Vorläufer von VB.Net. Syntaktisch liegt der Fokus auf eine einfache Lesbarkeit. VB-Skripte werden heute noch oft in Excel-Dokumenten verwendet.
 \subsection{Java}
-Java (nicht zu verwechseln mit Javascript) 
+Java (nicht zu verwechseln mit Javascript)
 \subsection{Typescript}
 Typescript ist eine Erweiterung von Javascript, die Elemente aus der objektorientierten Programmierung beinhaltet. Es soll damit für Entwickler möglich sein, die zunehmend komplexer werdende Dynamik von Websites mit Unterstützung von Elementen wie Klassen und Interfaces zu entwickeln, die es so in Javascript nicht direkt gibt. Typescript-Code wird bei Produktivsetzung in Javascript übersetzt (\enquote{transkompiliert}).
 \subsection{Coffeescript}
