@@ -45,24 +45,34 @@ Beispiele:\\
 
 Anlegen (Windows):\\
 
-echo \$null > test.txt:hidden.txt\\
+\begin{lstlisting}
+echo \$null > test.txt:hidden.txt
+\end{lstlisting}
 Durch diesen Befehl wird hidden.txt als Alternate Data Stream von test.txt angelegt. Falls test.txt nicht bereits existiert, wird diese Datei ebenfalls erstellt.
 
 Finden (Windows):\\
 
-dir /R\\
+\begin{lstlisting}
+dir /R
+\end{lstlisting}
 Der dir-Befehl ohne Argumente zeigt hidden.txt nicht an. Mit dem /R-Schalter hingegen wird hidden.txt aufgelistet.\\
 
 Schreiben von Daten (Windows):\\
 
-echo testcontent >test.txt\\
+\begin{lstlisting}
+echo testcontent >test.txt
+\end{lstlisting}
 Mit diesem Befehl können beliebige Daten in test.txt geschrieben werden. Dies beeinflusst weder die Existenz noch den Inhalt von hidden.txt\\
 
-echo hiddencontent > test.txt:hidden.txt\\
+\begin{lstlisting}
+echo hiddencontent > test.txt:hidden.txt
+\end{lstlisting}
 Mit diesem Befehl können beliebige Daten inhidden.txt geschrieben werden. Dies beeinflusst weder die Existenz noch den Inhalt von test.txt\\
 
 Auslesen von Daten (Linux):\\
-cat test.txt:hidden.txt\\
+\begin{lstlisting}
+cat test.txt:hidden.txt
+\end{lstlisting}
 
 
 \section{Anderes}
