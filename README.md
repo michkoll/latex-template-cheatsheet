@@ -10,6 +10,7 @@ Generating easy cheatsheets for different topics. Download the <a href="https://
 * Copy & Paste multicols-Code in the new file
 * Begin
 
+Feel free to contribute to this project!
 ## Template-Body
 
 ```latex
