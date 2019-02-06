@@ -39,6 +39,32 @@ Anwendung & \begin{tabular}[x]{@{}c@{}}Windows,\\externe\\Datenträger\end{tabul
 	\texttt{Testdisk} & Programm zum Wiederherstellen von gelöschten Dateien und Partitionen.\\
 	\texttt{xxd} & Konsolen-basiertes Tool für Linux zum Anzeigen des Hex-Dumps einer Datei.\\
 \end{tabular}
+\section{Alternate Data Streams}
+Bei NTFS-Systemen gibt es Alternate Data Streams (ADS). Obgleich es viele legitime Einsatzzwecke für ADS gibt, werden sie auch oft benutzt, um Daten zu verstecken. ADS sind Daten, die zu einer Datei hinzugefügt werden können, aber nicht Bestandteil von der Datei oder dessen Metadaten sind und standardmäßig nicht in Windows-Explorer etc. angezeigt werden. Eine Datei kann mehrere ADS haben. Ein ADS ist technisch gesehen eine Datei und der zu versteckende Inhalt wird in genau diese Datei geschrieben.\\
+Beispiele:\\
+
+Anlegen (Windows):\\
+
+echo \$null > test.txt:hidden.txt\\
+Durch diesen Befehl wird hidden.txt als Alternate Data Stream von test.txt angelegt. Falls test.txt nicht bereits existiert, wird diese Datei ebenfalls erstellt.
+
+Finden (Windows):\\
+
+dir /R\\
+Der dir-Befehl ohne Argumente zeigt hidden.txt nicht an. Mit dem /R-Schalter hingegen wird hidden.txt aufgelistet.\\
+
+Schreiben von Daten (Windows):\\
+
+echo testcontent >test.txt\\
+Mit diesem Befehl können beliebige Daten in test.txt geschrieben werden. Dies beeinflusst weder die Existenz noch den Inhalt von hidden.txt\\
+
+echo hiddencontent > test.txt:hidden.txt\\
+Mit diesem Befehl können beliebige Daten inhidden.txt geschrieben werden. Dies beeinflusst weder die Existenz noch den Inhalt von test.txt\\
+
+Auslesen von Daten (Linux):\\
+cat test.txt:hidden.txt\\
+
+
 \section{Anderes}
 \subsection{LUKS}
 Abkürzung für \enquote{Linux Unified Key Setup}. LUKS ist eine Erweiterung von dm-crypt und fügt den verschlüsselten Daten einen Header hinzu. Einen LUKS-Container erkennt man am Header. Dieser beginnt mit den Bytes \enquote{4C 55 4B 53 BA BE}.\\
