@@ -120,16 +120,18 @@ Haupteinstellungen in Datei/Registry-Hive \path{settings.dat}
 \subsubsection{Anwendungsdaten}
 Gespeichert in ESE-DB-Datenbanken, Aufbau nicht vollständig bekannt, teilweise möglich mit \texttt{ESEDatabaseView} von Nirsoft
 
-\section{Windows 10 Application Shortcuts}
+\section{Build-in applications}
 Im Folgenden sind auf Windows bereits vorinstallierte Programme aufgelistet, die forensisch verwertbare Information bringen können, mit dem Namen, unter dem sie im Konsolen-/Powershell-/\enquote{Ausführen}-/\enquote{Neuen Task ausführen}-Fenster gestartet werden können:
 
-\begin{tabular}{@{}p{\the\MyLen}%
+\begin{tabular}{@{}p{\the\MyLen}
 		@{}p{\linewidth-\the\MyLen}@{}}
 	\texttt{certmgr} &  Tool zum Verwalten der für den jeweiligen Benutzer verfügbaren Zertifikate.\\
+    \texttt{control} &  Systemsteuerung.\\
     \texttt{cipher} &  Tool zum sicheren löschen von Datan, sodass sie nicht wieder herstellbar sind. Kann auch dafür verwendet werden, freien Speicherplatz auf der Festplatte zu löschen. Kann auch dafür verwendet werden, Dateien zu verschlüsseln.\\
 	\texttt{diskmgmt} &  Tool mit grafischer Oberfläche zum Verwalten von Datenträgern: Partitionen, Laufwerksbuchstaben und die Partitionstabellenart (MBR/GPT) von Datenträgern kann hiermit verändert werden\\
 	\texttt{diskpart} &  Kommandozeilentool, das ähnliche Funktionalität bietet wie diskmgmt.\\
 	\texttt{eventvwr} & Tool zum Anzeigen diverser systemweiter Ereignisse. Entwickler von Dritt-Programmen können ihre Programme ebenfalls Ereignisse in die Ereignisanzeige schreiben lassen.\\
+	\texttt{fsutil} & Stellt Funktionalitäten für Dateisystem-Operationen bereit.\\
 	\texttt{gpedit} & Editor zum Bearbeiten von Richtlinien für einzelne Benutzer oder den ganzen Computer. Hier können Sicherheitseinstellungen vorgenommen werden aber auch Skripte hinterlegt werden, die beim Anmelden/Abmelden eines Nutzers oder auch beim Starten/Herunterfahren des Computers ausgeführt werden.\\
 	\texttt{msconfig} & Bietet Konfigurationsmöglichkeiten für den Start des Systems und bietet darüber hinaus eine Anzeige zur Information, welche Dienste gerade ausgeführt werden und welche davon beim Systemstart gestartet werden.\\
 	\texttt{msinfo32} & Liefert ausführliche Informationen zu Treibern, angeschlossene Hardware, Druckaufträge, Systemvariablen, geladene Module, Dienste, etc.\\
@@ -140,6 +142,60 @@ Im Folgenden sind auf Windows bereits vorinstallierte Programme aufgelistet, die
 	\texttt{taskschd} & Tool zum Anlegen von Aufgaben, die regelmäßig bzw. unter bestimmten Bedingungen ausgeführt werden.\\
 	\texttt{WF} &  Bietet Firewall-Konfigurationsmöglichkeiten
 	\end{tabular}
+Witere tiefer im System verankerte Konsolenbefehle:
+\begin{tabular}{@{}p{\the\MyLen}
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{computerdefaults} & Festlegen von Standardprogrammen.\\
+	\texttt{control appwiz.cpl,,2} & Windows Features aktivieren oder deaktivieren.\\
+	\texttt{inetcpl.cpl} & Öffnet die Internetoptionen.\\
+	\texttt{main.cpl} & Öffnet Mauseinstellungen.\\
+	\texttt{Ncpa.cpl} & Öffnet das Netzwerkverbindungsmenü.\\
+	\texttt{powercfg.cpl} & Öffnet die Energiesparoptionen.\\
+	\texttt{sndvol} & Öffnet das Sound-Menü.\\
+	\texttt{sysdm.cpl} & Systemeigenschaften öffnen (Umgebungsvariablen, Leistungsoptionen, Computername, etc.)
+	\end{tabular}
+
+\section{Scripts}
+Sicherstellen, dass eine Batch-Datei als Administrator gestartet wird:
+\begin{lstlisting}
+if not "%1"=="am_admin" (powershell start -verb runas '%0' am_admin & exit)
+\end{lstlisting}
+Öffnen einer Konsole als Systemnutzer (muss als Administrator ausgeführt werden):
+\begin{lstlisting}
+PsExec.exe -i -s -d CMD
+\end{lstlisting}
+Erlaube Ausführung von Powershell-Skripten:
+\begin{lstlisting}
+C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell.exe Set-ExecutionPolicy -Scope "LocalMachine" -ExecutionPolicy "Unrestricted"
+\end{lstlisting}
+Erlaube RDP-Verbindungen:
+\begin{lstlisting}
+REG.exe ADD "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /f /v fDenyTSConnections /t REG_DWORD /d 0
+\end{lstlisting}
+Schalte das Speichern von Thumbnails aus:
+\begin{lstlisting}
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer]
+"NoThumbnailCache"=dword:00000001
+"DisableThumbnailCache"=dword:00000001
+
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer]
+"DisableThumbsDBOnNetworkFolders"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer]
+"NoThumbnailCache"=dword:00000001
+"DisableThumbnailCache"=dword:00000001
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"DisableThumbnailCache"=dword:00000001
+"NoThumbnailCache"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"DisableThumbnailCache"=dword:00000001
+"NoThumbnailCache"=dword:00000001
+\end{lstlisting}
+
 \section{Fast Startup und Ruhezustand}
 Datei: \path{hiberfil.sys}
 \subsubsection{Zustände}

@@ -1,0 +1,68 @@
+\raggedright
+\footnotesize
+\begin{multicols}{3}	
+	\setlength{\premulticols}{1pt}
+	\setlength{\postmulticols}{1pt}
+	\setlength{\multicolsep}{1pt}
+	\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\underline{Reverse-Engineering}} \\
+\end{center}
+
+\section{Tools}
+\settowidth{\MyLen}{\texttt{option.2.spa}}
+\begin{tabular}{@{}p{\the\MyLen}
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{.NET Reflector} & Programm zum Dekompilieren von .NET-Programmen.\\
+	\texttt{IDA} &  Vollständiger Name: Interactive Disassembler. Von Microsoft entwickelter Disassembler, der Skripting erlaubt. \\
+	\texttt{ildasm} & Einfacher GUI-basierter Disassembler für PE-Anwendungen, die IL-Code enthalten.\\
+	\texttt{OllyDbg} & Etablierter Debugger für 32-Bit Anwendungen auf Windows.\\
+	\texttt{WinDbg} & Debugger für Windows Kernel- und Usermode, der die Analyse von crash dumps und CPU-Register erlaubt.\\
+\end{tabular}
+\section{Obfuscation}
+Obfuscation bezeichnet allgemein eine Veränderung des Programmcodes, um die Lesbarkeit bzw. das Reverse Engineering des Programms zu erschweren. Das Verhalten des Programs soll dabei gleich bleiben.\footnote{Auch über Seiteneffekte im Verhalten sollte das obfuskierte Programm wenn möglich nicht vom \enquote{Originalprogramm} unterscheidbar sein.} In den folgenden Unterabschnitten werden einige Techniken zur Obfuscation beschrieben.
+\subsection{Function-Splitting}
+Beim Function-Splitting wird eine Funktion f \enquote{kopiert} (im Folgenden f' genannt) (und dann im Idealfall an einer ganz anderen Stelle im Programm abgelegt und inhaltlich möglichst weiter obfuscatet, damit man möglichst schwer erkennen kann, dass die beiden Funktionen inhaltlich das gleiche machen). Wenn im bisherigen Programm f von 2 Stellen (im Folgenden g1 und g2 genannt) aus aufgerufen wird, dann wird der Programmcode prinzipiell dahingehend angepasst, dass g1 f aufruft und g2 f' aufruft. Es ist dadurch schwerer erkennbar, dass an dieser Stelle g1 und g2 inhaltlich die gleiche Funktion ausführen.
+\subsection{Function-Merging}
+Function-Merging ist im Prinzip das Gegenteil vom Function-Splitting: Wenn es zwei Funktionen f1 und f2 gibt, werden diese ersetzt durch eine Funktion f3. Die Parameter von f3 sind inhaltlich die Summe der Parameter von f1 und f2 und (je nach Implementierung) noch ein Parameter um zu entscheiden, ob der Algorithmus von f1 oder f2 ausgeführt werden soll, wenn f3 aufgerufen wird.
+\subsection{Junk-Code}
+Junk-Code bezeichnet Programmcode, der zur korrekten Programmausführung nicht erforderlich ist. Er dient lediglich dazu, einem Reverse-Engineerer mehr Arbeit zu machen, da es nicht immer leicht erkennbar ist, ob Code Junk-Code ist oder nicht.
+\subsection{Fake-Loops}
+Als Fake-Loops werden Loops (for-Loops, while-Loops, etc.) bezeichnet, die den Anschein erwecken sollen, dass der Schleifeninhalt öfters ausgeführt wird. In Wirklichkeit wird der Inhalt der Schleife jedoch nur einmal oder womöglich auch gar nicht ausgeführt (z. B. wenn sie ausschließlich mit Junk-Code gefüllt ist).
+\section{Decompilierung}
+Beim Dekompilieren wird aus einem kompilierten Programm der Quelltext rekonstruiert. Die Ausgabe eines Decompilers ist beispielsweise C-Code. Dieser Vorgang ist nicht eindeutig und automatisches Decompilieren liefert oft nur bedingt brauchbare Ergebnisse.
+\section{Disassemblierung}
+Als Disassemblierung bezeichnet man einen Prozess, der aus einem kompilierten Programm die Maschinencode-Befehle in Assebler-Befehle zurück übersetzt. Dieser Vorgang ist in aller Regel relativ eindeutig und automatisiert durchführbar.
+\subsection{Verhinderung von Disassemblierung}
+\subsubsection{Unaligned Branches}
+Maschinencode-Befehle haben keine einheitliche Länge. Dadurch können Opcodes in anderen Opcodes versteckt werden können. Wenn diese Eigenschaft ausgenutzt wird, kommen beim seriellen Disassemblieren möglicherweise andere Befehlsabfolgen zu Stande als bei der Ausführung des Programms. 
+\section{Anti-Debug-Maßnahmen}
+\subsubsection{int 3}
+Die \enquote{int 3}-Instruktion wird von Debuggern benutzt, um einen Breakpoint zu setzen/zur Laufzeit zu erkennen. Wenn \enquote{int 3} im bereits im Programmcode aufgefunden wird, deutet das auf eine Anit-Debug-Maßnahme hin. \enquote{int 3} kann durch \enquote{nop} (\enquote{No operation}-Instruktion) ersetzt werden, um \enquote{int 3} beim Debuggen zu überspringen.
+\subsection{Angehängte Debugger abfragen}
+Es gibt die Funktionen, um direkt abzufragen, ob ein Debugger an das Programm angehängt ist. Im Wesentlichen sind dies:\\
+-\href{https://msdn.microsoft.com/en-us/library/ms680345(VS.85).aspx}{IsDebuggerPresent} \\
+-\href{https://msdn.microsoft.com/en-us/library/ms679280(VS.85).aspx}{CheckRemoteDebuggerPresent} \\
+Dass diese Funktionen benutzt werden, kann ein Indiz dafür sein, dass das Programm Debugging erschweren möchte. Ein Programm kann sich in dem Fall beliebig anders verhalten, wenn mit diesen Methoden festgestellt wird, dass ein Debugger angehängt ist.
+\subsection{Timestamp-Analyse}
+Bei normaler Programmausführung werden Funktionen relativ schnell hintereinander ausgeführt. Wenn die Ausführung einer Funktion sehr viel länger dauert als normalerweise, ist dies ein Indiz dafür, dass in der Zwischenzeit ein Breakpoint getriggert worden ist und somit das Programm offensichtlich gerade analysiert wird. Ein Programm kann sich in dem Fall anschließend beliebig anders verhalten.
+\subsection{Virtuelle Maschinen}
+Es ist relativ leicht, zu erkennen, ob ein Programm in einer virtuellen Maschine ausgeführt wird. Programme können sich dementsprechend beliebig anders verhalten, wenn sie in einer VM ausgeführt werden. Da heute vor allem im kommerziellen Bereich aber grundsätzlich viele Programme in VMs laufen (z. B. Webserver etc.), macht diese Anti-Debug-Maßnahme nur bei Programmen Sinn, die darauf ausgelegt sind, normalerweise nicht in einer virtuellen Maschine zu laufen (z. B. bei Desktoprechnern von Privatpersonen).
+\section{Libraries}
+\subsubsection{MSVCRT.DLL}
+Enthält die Funktionen der C-Standard-Bibliothek für den von Microsoft entwickelten Visual C++ Compiler von Version 4.2 bis 6.0.
+\section{.NET-Programme}
+Reverse Engineering von .Net-Programme ist relativ einfach. Dies hat im Wesentlichen 2 Gründe:
+\begin{itemize}
+\item Die originalen Bezeichner von Funktionen etc. werden ins kompilierte Binary einbezogen/übernommen und können beim Dekompilieren wieder ausgelesen werden.
+\item Der .NET-Kompiler erzeugt generell Common-Intermediate-Language-Code, aus dem die Programmstruktur und damit der Source-Code generell relativ gut rekonstruiert werden können.
+\end{itemize}
+Es gibt deshalb Tools, die den Reverse-Engineering-Vorgang für .NET-Programme sehr leicht machen (siehe Tools-Abschnitt).
+\section{Verschiedenes}
+\subsection{Intrinsische Funktion}
+\subsection{Breakpoints}
+Breakpoints werden beim Debuggen dazu benutzt, um die Ausführung eines Programms an einer bestimmten Stelle zu pausieren. Es gibt folgende Arten von Breakpoints:
+\subsubsection{Hardware-Breakpoints}
+\subsubsection{Software-Breakpoints}
+\end{multicols}

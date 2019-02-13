@@ -1,0 +1,83 @@
+\raggedright
+\footnotesize
+\begin{multicols}{3}	
+	\setlength{\premulticols}{1pt}
+	\setlength{\postmulticols}{1pt}
+	\setlength{\multicolsep}{1pt}
+	\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\underline{Datenträgerforensik}} \\
+\end{center}
+
+\section{Dateisysteme}
+\begin{tabular}{llll}
+ & NTFS & exFAT & FAT32 \\
+Max. Größe & 16EB & 128PB & 2TB\\
+Max. Dateigröße & ~16TB & 16EB & 4GB\\
+\begin{tabular}[x]{@{}c@{}}Max. Länge von\\Dateinamen\end{tabular} & 255 & 255 & 255\\
+Anwendung & \begin{tabular}[x]{@{}c@{}}Windows,\\externe\\Datenträger\end{tabular} & diverses & USB-Sticks\\
+ \end{tabular}
+\section{Tools}
+\settowidth{\MyLen}{\texttt{option.2.spa}}
+\begin{tabular}{@{}p{\the\MyLen}
+		@{}p{\linewidth-\the\MyLen}@{}}
+	\texttt{AccessData FTK Imager} & Tool zum erstellen von Datenträger-Images.\\
+	\texttt{Active@ Disk Editor} & Tool zum direkten Anzeigen/Bearbeiten von Daten auf der Festplatte im Hex-Format.\\
+	\texttt{dd} & Tool zum Erstellen von Datenträgerimages.\\
+	\texttt{Alternate\-Stream\-View} & GUI-basiertes Tool zum schnellen und einfachen Anzeigen von Alternate Data Streams.\\
+	\texttt{exiftool} & Umfangreiches Konsolen-basiertes Tool zum Anzeigen von EXIF-Daten von Bilddateien.\\
+	\texttt{DiskDigger} & Programm zum Wiederherstellen von gelöschten Dateien.\\
+	\texttt{fdisk} & Kommandozeilen-Programm zur Partitionierung von Datenträgern.\\
+	\texttt{fsstat} & Tool zum Anzeigen von Informationen über ein Dateisystem.\\
+	\texttt{HxD} & Einfacher Hex-Editor.\\
+	\texttt{icat} & Tool zum Anzeigen einer Datei basierend auf der inode-Nummber.\\
+	\texttt{losetup} & Konsolenbasiertes Tool für Linux zum Mounten von Partitionsimages.\\
+	\texttt{mmls} & Tool zum Auslesen der Partitionstabelle.\\
+	\texttt{ntfswalker} & Tool zum analyiseren von NTFS-Partitionen.\\
+	\texttt{OSFMount} & GUI-basiertes Windows-Tool zum Mounten von Partitionsimages unter Windows.\\
+	\texttt{Testdisk} & Programm zum Wiederherstellen von gelöschten Dateien und Partitionen.\\
+	\texttt{xxd} & Konsolen-basiertes Tool für Linux zum Anzeigen des Hex-Dumps einer Datei.\\
+\end{tabular}
+\section{Alternate Data Streams}
+Bei NTFS-Systemen gibt es Alternate Data Streams (ADS). Obgleich es viele legitime Einsatzzwecke für ADS gibt, werden sie auch oft benutzt, um Daten zu verstecken. ADS sind Daten, die zu einer Datei hinzugefügt werden können, aber nicht Bestandteil von der Datei oder dessen Metadaten sind und standardmäßig nicht in Windows-Explorer etc. angezeigt werden. Eine Datei kann mehrere ADS haben. Ein ADS ist technisch gesehen eine Datei und der zu versteckende Inhalt wird in genau diese Datei geschrieben.\\
+Beispiele:\\
+
+Anlegen (Windows):\\
+
+\begin{lstlisting}
+echo \$null > test.txt:hidden.txt
+\end{lstlisting}
+Durch diesen Befehl wird hidden.txt als Alternate Data Stream von test.txt angelegt. Falls test.txt nicht bereits existiert, wird diese Datei ebenfalls erstellt.
+
+Finden (Windows):\\
+
+\begin{lstlisting}
+dir /R
+\end{lstlisting}
+Der dir-Befehl ohne Argumente zeigt hidden.txt nicht an. Mit dem /R-Schalter hingegen wird hidden.txt aufgelistet.\\
+
+Schreiben von Daten (Windows):\\
+
+\begin{lstlisting}
+echo testcontent >test.txt
+\end{lstlisting}
+Mit diesem Befehl können beliebige Daten in test.txt geschrieben werden. Dies beeinflusst weder die Existenz noch den Inhalt von hidden.txt\\
+
+\begin{lstlisting}
+echo hiddencontent > test.txt:hidden.txt
+\end{lstlisting}
+Mit diesem Befehl können beliebige Daten inhidden.txt geschrieben werden. Dies beeinflusst weder die Existenz noch den Inhalt von test.txt\\
+
+Auslesen von Daten (Linux):\\
+\begin{lstlisting}
+cat test.txt:hidden.txt
+\end{lstlisting}
+
+
+\section{Anderes}
+\subsection{LUKS}
+Abkürzung für \enquote{Linux Unified Key Setup}. LUKS ist eine Erweiterung von dm-crypt und fügt den verschlüsselten Daten einen Header hinzu. Einen LUKS-Container erkennt man am Header. Dieser beginnt mit den Bytes \enquote{4C 55 4B 53 BA BE}.\\
+Ein LUKS-Container kann beispielsweise mit losetup eingebunden (gemountet) werden. Ein typischer Aufruf kann so aussehen:\\
+sudo losetup -o 11071426702 /dev / loop3 myImage.img\\
+\end{multicols}

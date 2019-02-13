@@ -5,7 +5,6 @@
 \usepackage[landscape]{geometry}
 \usepackage{amsmath,amsthm,amsfonts,amssymb}
 \usepackage{color,graphicx,overpic}
-
 \usepackage{enumitem}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -16,7 +15,10 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{xcolor}
 \usepackage{csquotes}
-
+\usepackage{lmodern}
+\usepackage{listings}
+\definecolor{listingBackground}{rgb}{0.8,0.8,0.8}
+\lstset{frame = none, backgroundcolor = \color{listingBackground}}
 
 \pdfinfo{
   /Title (cheatsheet.pdf)
@@ -64,8 +66,6 @@
 {0.5ex plus .2ex}
 {\colorbox{yellow}{{#1}}}
 
-
-
 % Define BibTeX command
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
@@ -73,11 +73,9 @@
 % Don't print section numbers
 \setcounter{secnumdepth}{0}
 
-
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt plus 0.5ex}
 
-%My Environments
 \newtheorem{example}[section]{Example}
 % -----------------------------------------------------------------------
 
