@@ -1,14 +1,28 @@
-
 # latex-template-cheatsheet
 
-Generating easy cheatsheets for different topics. Download the <a href="https://github.com/anionDev/latex-template-cheatsheet/raw/master/cheatsheet.pdf" target="_blank">current cheatsheet</a> to see an example.
+## Summary
 
-## Using
+Generating easy cheatsheets for different topics. Download the <a href="https://github.com/michkoll/latex-template-cheatsheet/raw/master/cheatsheet.pdf" target="_blank">current forensic cheatsheet</a> to see an example.
 
-* create directory with topic name
+<details>
+	<summary>
+		Other available cheatsheets (from <a href="https://github.com/anionDev" target="_blank">AnionDev</a>-fork)
+	</summary>
+	<p>
+		<a href="https://github.com/anionDev/latex-template-cheatsheet/raw/cheatsheet-com/cheatsheet.pdf" target="_blank">COM</a>
+		<a href="https://github.com/anionDev/latex-template-cheatsheet/raw/cheatsheet-cryptography/cheatsheet.pdf" target="_blank">Kryptographie</a>
+		<a href="https://github.com/anionDev/latex-template-cheatsheet/raw/cheatsheet-git/cheatsheet.pdf" target="_blank">Git</a>
+		<a href="https://github.com/anionDev/latex-template-cheatsheet/raw/cheatsheet-programming-languages/cheatsheet.pdf" target="_blank">Programmiersprachen</a>
+		<a href="https://github.com/anionDev/latex-template-cheatsheet/raw/cheatsheet-theoretical-computer-science/cheatsheet.pdf" target="_blank">Theoretische Informatik</a>
+	</p>
+</details>
+
+## Getting started
+
+* create branch with topic name
 * create topic specific TeX-File in new directory
 * Copy & Paste multicols-Code in the new file
-* Begin
+* Start writing
 
 Feel free to contribute to this project!
 ## Template-Body
