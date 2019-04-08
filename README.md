@@ -1,7 +1,8 @@
-
 # latex-template-cheatsheet
 
-Generating easy cheatsheets for different topics. Download the <a href="https://github.com/michkoll/latex-template-cheatsheet/raw/master/cheatsheet.pdf" target="_blank">current cheatsheet</a> to see an example.
+## Summary
+
+Generating easy cheatsheets for different topics. Download the <a href="https://github.com/michkoll/latex-template-cheatsheet/raw/master/cheatsheet.pdf" target="_blank">current forensic cheatsheet</a> to see an example.
 
 <details>
 	<summary>
@@ -15,12 +16,12 @@ Generating easy cheatsheets for different topics. Download the <a href="https://
 	</p>
 </details>
 
-## Using
+## Getting started
 
-* create directory with topic name
+* create branch with topic name
 * create topic specific TeX-File in new directory
 * Copy & Paste multicols-Code in the new file
-* Begin
+* Start writing
 
 Feel free to contribute to this project!
 ## Template-Body
