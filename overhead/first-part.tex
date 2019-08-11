@@ -80,16 +80,16 @@
 % -----------------------------------------------------------------------
 
 \begin{document}
-\IfFileExists{../../metadata.tex}{\input{../../metadata.tex}}
+\IfFileExists{../metadata.tex}{\input{../metadata.tex}}{}
 \newlength{\MyLen}
 \newlength{\MyLenTwo}
 
 \begin{center}
 \Large{\underline{Cheatsheet 
 \ifdefined\cheatsheetname
-    \cheatsheetname \\
+    \cheatsheetname 
 \fi
-}}\\
+}}
 \ifdefined\customfooter
     \small by \cheatsheetcreator\\
 \fi
