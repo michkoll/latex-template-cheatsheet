@@ -84,6 +84,20 @@
 \newlength{\MyLenTwo}
 
 \begin{center}
-	\Large{\underline{Cheatsheet}} \\
-	\small by Koll, Michael\\
+\Large{\underline{Cheatsheet 
+\ifdefined\cheatsheetname
+    \cheatsheetname \\
+\fi
+}}\\
+\ifdefined\customfooter
+    \small by \cheatsheetcreator\\
+\fi
 \end{center}
+
+\raggedright
+\footnotesize
+\begin{multicols}{3}
+	\setlength{\premulticols}{1pt}
+	\setlength{\postmulticols}{1pt}
+	\setlength{\multicolsep}{1pt}
+	\setlength{\columnsep}{2pt}
