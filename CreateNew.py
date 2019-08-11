@@ -29,7 +29,9 @@ with open(content_file,'w') as f:
 with open("License.txt",'w') as f:
     f.write("Only the author of the content of '"+content_file+"' is allowed to use the content of this repository.")
 with open("metadata.tex",'w') as f:
-    f.write("TODO")
+    f.write("\\newcommand{\\cheatsheetcreator}{authorname}\n"+
+    "\\newcommand{\\cheatsheetname}{"+args.document_name+"}\n"+
+    "\\newcommand{\\customfooter}{Fehler und Verbesserungen inhaltlicher Art bitte melden: \\url{https://example.com/mycheatsheet}}")
 shutil.copyfile(os.path.join(template_folder,".gitignore"),os.path.join(new_document_folder,".gitignore"))
 os.chdir("template")
 execute("Python", "BuildDocument.py")
