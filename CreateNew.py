@@ -9,8 +9,10 @@ parser.add_argument('folder_for_new_document', help='Specifies the folder where 
 parser.add_argument('document_name', help='Specifies the name of the new document')
 
 args = parser.parse_args()
-template_repository=os.path.dirname(os.path.abspath(__file__))
-template_repository="https://github.com/anionDev/latex-template-cheatsheet.git"
+
+template_repository=os.path.dirname(os.path.abspath(__file__))# use this path to use this (local) repository as remote for the submodule
+#template_repository="https://github.com/anionDev/latex-template-cheatsheet.git"
+
 def execute(command:str, argument:str):
     print(subprocess.getoutput(command+" "+argument))
 
@@ -23,7 +25,7 @@ os.chdir(new_document_folder)
 execute("git", "init")
 execute("git", "submodule add "+template_repository+" template")
 content_file="entire-content.tex"
-content_file_content="TODO insert cheatsheet-content here"
+content_file_content="TODO insert cheatsheet-content here\\newline\n\\newline\n\\lipsum"
 with open(content_file,'w') as f:
     f.write(content_file_content)
 with open("License.txt",'w') as f:
