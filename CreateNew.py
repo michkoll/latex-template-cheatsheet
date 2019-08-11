@@ -2,15 +2,15 @@ import argparse
 import os
 import sys
 import subprocess
-import shutil
+import urllib.request
 parser = argparse.ArgumentParser(description='Creates a new formal letter.')
 
 parser.add_argument('folder_for_new_document', help='Specifies the folder where the new document should be stored')
 parser.add_argument('document_name', help='Specifies the name of the new document')
 
 args = parser.parse_args()
-template_folder=os.path.dirname(os.path.abspath(__file__))
-
+template_repository=os.path.dirname(os.path.abspath(__file__))
+template_repository="https://github.com/anionDev/latex-template-cheatsheet.git"
 def execute(command:str, argument:str):
     print(subprocess.getoutput(command+" "+argument))
 
@@ -21,9 +21,9 @@ if(os.path.isdir(new_document_folder)):
 os.makedirs(new_document_folder)
 os.chdir(new_document_folder)
 execute("git", "init")
-execute("git", "submodule add "+template_folder+" template")
+execute("git", "submodule add "+template_repository+" template")
 content_file="entire-content.tex"
-content_file_content="TODO"
+content_file_content="TODO insert cheatsheet-content here"
 with open(content_file,'w') as f:
     f.write(content_file_content)
 with open("License.txt",'w') as f:
@@ -32,7 +32,7 @@ with open("metadata.tex",'w') as f:
     f.write("\\newcommand{\\cheatsheetcreator}{authorname}\n"+
     "\\newcommand{\\cheatsheetname}{"+args.document_name+"}\n"+
     "\\newcommand{\\customfooter}{Fehler und Verbesserungen inhaltlicher Art bitte melden: \\url{https://example.com/mycheatsheet}}")
-shutil.copyfile(os.path.join(template_folder,".gitignore"),os.path.join(new_document_folder,".gitignore"))
+    urllib.request.urlretrieve('https://raw.githubusercontent.com/github/gitignore/master/TeX.gitignore', os.path.join(new_document_folder,".gitignore"))
 os.chdir("template")
 execute("Python", "BuildDocument.py")
 os.chdir("..")
