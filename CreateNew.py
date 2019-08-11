@@ -10,8 +10,8 @@ parser.add_argument('document_name', help='Specifies the name of the new documen
 
 args = parser.parse_args()
 
-template_repository=os.path.dirname(os.path.abspath(__file__))# use this path to use this (local) repository as remote for the submodule
-#template_repository="https://github.com/anionDev/latex-template-cheatsheet.git"
+#template_repository=os.path.dirname(os.path.abspath(__file__))# use this path to use this (local) repository as remote for the submodule
+template_repository="https://github.com/anionDev/latex-template-cheatsheet.git"
 
 def execute(command:str, argument:str):
     print(subprocess.getoutput(command+" "+argument))
