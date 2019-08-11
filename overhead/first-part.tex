@@ -8,7 +8,7 @@
 \usepackage{enumitem}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-%\usepackage{url}
+\usepackage{url}
 \usepackage{lipsum}
 \usepackage[ngerman]{babel}
 %\PassOptionsToPackage{obeyspaces}{url}
@@ -80,21 +80,25 @@
 % -----------------------------------------------------------------------
 
 \begin{document}
+\IfFileExists{../metadata.tex}{\input{../metadata.tex}}{}
 \newlength{\MyLen}
 \newlength{\MyLenTwo}
 
 \begin{center}
 \Large{\underline{Cheatsheet 
 \ifdefined\cheatsheetname
-    \cheatsheetname \\
+    \cheatsheetname 
 \fi
-}}\\
-\ifdefined\customfooter
-    \small by \cheatsheetcreator\\
-\fi
+}}
 \end{center}
 
+\ifdefined\customfooter
+\begin{center}
+    \small by \cheatsheetcreator\\
+\end{center}
+\fi
 \raggedright
+
 \footnotesize
 \begin{multicols}{3}
 	\setlength{\premulticols}{1pt}
