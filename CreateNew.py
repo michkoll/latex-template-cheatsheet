@@ -30,6 +30,8 @@ with open(content_file,'w') as f:
     f.write(content_file_content)
 with open("License.txt",'w') as f:
     f.write("Only the author of the content of '"+content_file+"' is allowed to use the content of this repository.")
+with open("preamble.tex",'w') as f:
+    f.write("%Space for custom usepackage-declarations, etc.")
 with open("metadata.tex",'w') as f:
     f.write("\\newcommand{\\cheatsheetcreator}{authorname}\n"+
     "\\newcommand{\\cheatsheetname}{"+args.document_name+"}\n"+
