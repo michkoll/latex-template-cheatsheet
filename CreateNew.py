@@ -3,10 +3,10 @@ import os
 import sys
 import subprocess
 import urllib.request
-parser = argparse.ArgumentParser(description='Creates a new formal letter.')
+parser = argparse.ArgumentParser(description='Creates a new cheatsheet.')
 
-parser.add_argument('folder_for_new_document', help='Specifies the folder where the new document should be stored')
-parser.add_argument('document_name', help='Specifies the name of the new document')
+parser.add_argument('folder_for_new_document', help='Specifies the folder where the cheatsheet should be stored')
+parser.add_argument('document_name', help='Specifies the name of the new cheatsheet')
 
 args = parser.parse_args()
 
