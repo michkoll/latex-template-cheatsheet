@@ -1,50 +1,31 @@
-
 # latex-template-cheatsheet
 
-Generating easy cheatsheets for different topics. Download the <a href="https://github.com/michkoll/latex-template-cheatsheet/raw/master/cheatsheet.pdf" target="_blank">current cheatsheet</a> to see an example.
+## Summary
 
-## Using
-
-* create directory with topic name
-* create topic specific TeX-File in new directory
-* Copy & Paste multicols-Code in the new file
-* Begin
+Generating cheatsheets for any topic easily. Download the <a href="https://github.com/michkoll/cheatsheet-forensics/raw/master/cheatsheet.pdf" target="_blank">current forensics-cheatsheet</a> to see an example.
 
 Feel free to contribute to this project!
-## Template-Body
 
-```latex
-%Body for every cheatsheet
-\raggedright
-\footnotesize
-\begin{multicols}{3}	
-	% multicol parameters
-	% These lengths are set only within the two main columns
-	%\setlength{\columnseprule}{0.25pt}
-	\setlength{\premulticols}{1pt}
-	\setlength{\postmulticols}{1pt}
-	\setlength{\multicolsep}{1pt}
-	\setlength{\columnsep}{2pt}
+## Getting started
 
-\begin{center}
-     \Large{\underline{Sample}} \\
-\end{center}
+* Create a new repository and add this repository as submodule in a folder called `template`. (You may use `git submodule add https://github.com/michkoll/latex-template-cheatsheet.git template`.)
+* Create a tex-file and write down your content
+* Reference your tex-files in `entire-content.tex` relative to the `template`-directory.
+* Run `template/BuildScripts/BuildDocument.py`.
 
-\section{Section 1}
-Text
-\subsection{xCode}
-Subsection text
+This process can be automated. You must only execute the following commands
 
-\section{Section 2}
-Text 2
-
-\section{Section 3}
-Etc.
-
-% You can even have references
-\rule{0.3\linewidth}{0.25pt}
-\scriptsize
-\bibliographystyle{abstract}
-\bibliography{refFile}
-\end{multicols}
 ```
+git clone https://github.com/michkoll/latex-template-cheatsheet.git
+cd latex-template-cheatsheet
+python CreateNew.py C:\myFolderForCheatsheets mycheatsheettitle
+```
+
+This will create a new repository with a cheatsheet. In `C:\myFolderForDocuments\entire-content.tex` you can edit the content of yout cheatsheet. The generated pdf-document is located at `C:\myFolderForDocuments\cheatsheet.pdf`.
+
+# Requirements
+
+To get the create- and build-script working the following commands must be available on your system:
+* python
+* git
+* pdflatex

@@ -1,4 +1,5 @@
 \documentclass[10pt,landscape,obeyspaces]{article}
+\IfFileExists{../preamble.tex}{\input{../preamble.tex}}{}
 \usepackage{multicol}
 \usepackage{calc}
 \usepackage{ifthen}
@@ -8,25 +9,16 @@
 \usepackage{enumitem}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-%\usepackage{url}
+\usepackage{url}
 \usepackage{lipsum}
 \usepackage[ngerman]{babel}
-%\PassOptionsToPackage{obeyspaces}{url}
 \usepackage[hidelinks]{hyperref}
 \usepackage{xcolor}
 \usepackage{csquotes}
 \usepackage{lmodern}
 \usepackage{listings}
-\definecolor{listingBackground}{rgb}{0.8,0.8,0.8}
+\definecolor{listingBackground}{rgb}{0.75,0.85,0.92}
 \lstset{frame = none, backgroundcolor = \color{listingBackground}}
-
-\pdfinfo{
-  /Title (cheatsheet.pdf)
-  /Creator (TeX)
-  /Producer (pdfTeX 1.40.0)
-  /Author (Michael Koll)
-  /Subject (Forensik-Cheatsheets)
-  /Keywords (pdflatex, latex,pdftex,tex, cheatsheet, forensics)}
 
 % This sets page margins to .5 inch if using letter paper, and to 1cm
 % if using A4 paper. (This probably isn't strictly necessary.)
@@ -80,10 +72,40 @@
 % -----------------------------------------------------------------------
 
 \begin{document}
+\IfFileExists{../metadata.tex}{\input{../metadata.tex}}{}
+
+\ifdefined\cheatsheetname
+    \newcommand{\cheatsheetnamesafe}{\cheatsheetname}
+    \else \newcommand{\cheatsheetnamesafe}{ }
+\fi
+
+\ifdefined\cheatsheetcreator
+    \newcommand{\cheatsheetcreatorsafe}{\cheatsheetcreator}
+    \else \newcommand{\cheatsheetcreatorsafe}{ Unknown author }
+\fi
+
+\pdfinfo{
+  /Title (\cheatsheetnamesafe)
+  /Author (\cheatsheetcreatorsafe)
+  /Subject (\cheatsheetnamesafe)}
+
+
 \newlength{\MyLen}
 \newlength{\MyLenTwo}
 
 \begin{center}
-	\Large{\underline{Cheatsheet}} \\
-	\small by Koll, Michael\\
+\Large{\underline{Cheatsheet \cheatsheetnamesafe}}
 \end{center}
+
+\begin{center}
+    \small by \cheatsheetcreatorsafe\\
+\end{center}
+
+\raggedright
+
+\footnotesize
+\begin{multicols}{3}
+	\setlength{\premulticols}{1pt}
+	\setlength{\postmulticols}{1pt}
+	\setlength{\multicolsep}{1pt}
+	\setlength{\columnsep}{2pt}
