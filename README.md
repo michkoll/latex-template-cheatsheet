@@ -2,13 +2,13 @@
 
 ## Summary
 
-Generating cheatsheets for any topic easily. Download the <a href="https://github.com/michkoll/cheatsheet-forensics/raw/master/cheatsheet.pdf" target="_blank">current forensics-cheatsheet</a> to see an example.
+Generating cheatsheets for any topic easily. Download the <a href="https://github.com/aniondev/cheatsheet-forensics/raw/master/cheatsheet.pdf" target="_blank">current forensics-cheatsheet</a> to see an example.
 
 Feel free to contribute to this project!
 
 ## Getting started
 
-* Create a new repository and add this repository as submodule in a folder called `template`. (You may use `git submodule add https://github.com/michkoll/latex-template-cheatsheet.git template`.)
+* Create a new repository and add this repository as submodule in a folder called `template`. (You may use `git submodule add https://github.com/aniondev/latex-template-cheatsheet.git template`.)
 * Create a tex-file and write down your content
 * Reference your tex-files in `entire-content.tex` relative to the `template`-directory.
 * Run `template/BuildScripts/BuildDocument.py`.
@@ -16,7 +16,7 @@ Feel free to contribute to this project!
 This process can be automated. You must only execute the following commands
 
 ```
-git clone https://github.com/michkoll/latex-template-cheatsheet.git
+git clone https://github.com/aniondev/latex-template-cheatsheet.git
 cd latex-template-cheatsheet
 python CreateNew.py C:\myFolderForCheatsheets mycheatsheettitle
 ```
