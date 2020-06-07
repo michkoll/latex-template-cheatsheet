@@ -7,5 +7,8 @@ process = Popen(["arara", "cheatsheet.tex"])
 exit_code = process.wait()
 if(exit_code!=0):
     raise Exception("Compiling cheatsheet resulted in exitcode "+str(exit_code))
-os.rename("cheatsheet.pdf",".."+os.path.sep+os.path.basename(Path(pathlib.Path(__file__).parent.absolute()).parent)+".pdf")
+filename=".."+os.path.sep+os.path.basename(Path(pathlib.Path(__file__).parent.absolute()).parent)+".pdf"
+if os.path.exists(filename):
+    os.remove(filename)
+os.rename("cheatsheet.pdf",filename)
 
