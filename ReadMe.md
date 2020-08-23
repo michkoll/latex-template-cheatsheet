@@ -40,4 +40,4 @@ To get this working the following commands must be available on your system:
 
 ## License
 
-This repository is licensed under the terms of the [MIT-license](https://raw.githubusercontent.com/michkoll/latex-template-cheatsheet/master/LICENSE).
+This repository is licensed under the terms of the [MIT-license](https://raw.githubusercontent.com/michkoll/latex-template-cheatsheet/master/License.txt).
